@@ -35,7 +35,7 @@
         <dependency>
             <groupId>world.bentobox</groupId>
             <artifactId>bentobox</artifactId>
-            <version>FC-1</version>
+            <version>0.9.0-alpha2</version>
             <scope>provided</scope>
         </dependency>
     </dependencies>
