@@ -18,11 +18,6 @@ public class Category implements Hashable {
         return id;
     }
 
-    @Override
-    public String getHash() {
-        return "";
-    }
-
     public ItemStack getIcon() {
         return icon;
     }

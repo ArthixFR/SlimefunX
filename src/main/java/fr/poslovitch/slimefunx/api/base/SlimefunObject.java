@@ -21,11 +21,6 @@ public class SlimefunObject implements Hashable {
         return id;
     }
 
-    @Override
-    public String getHash() {
-        return "";
-    }
-
     public Category getCategory() {
         return category;
     }
