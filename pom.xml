@@ -12,6 +12,7 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
         <java.version>1.8</java.version>
+        <server.jars>${project.basedir}/lib</server.jars>
     </properties>
 
     <repositories>
@@ -26,6 +27,13 @@
     </repositories>
 
     <dependencies>
+        <dependency>
+            <groupId>org.spigotmc</groupId>
+            <artifactId>spigot-1.13.1</artifactId>
+            <scope>system</scope>
+            <systemPath>${server.jars}/spigot-1.13.1.jar</systemPath>
+            <version>1.13.1</version>
+        </dependency>
         <dependency>
             <groupId>org.spigotmc</groupId>
             <artifactId>spigot-api</artifactId>
