@@ -7,8 +7,7 @@ import org.bukkit.inventory.ItemStack;
 
 public class SlimefunMachine extends SlimefunItem implements Placeable {
 
-    public SlimefunMachine(String id, Category category, ItemStack item, int researchCost) {
-        super(id, category, item, researchCost);
+    public SlimefunMachine(String id, Category category, ItemStack item, String[][] recipePattern, int researchCost) {
+        super(id, category, item, recipePattern, researchCost);
     }
-
 }
