@@ -1,9 +1,9 @@
 package fr.poslovitch.slimefunx.api.categories;
 
-import fr.poslovitch.slimefunx.api.interfaces.Hashable;
+import fr.poslovitch.slimefunx.api.interfaces.Identifiable;
 import org.bukkit.inventory.ItemStack;
 
-public class Category implements Hashable {
+public class Category implements Identifiable {
 
     private final String id;
     private final ItemStack icon;

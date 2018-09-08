@@ -1,16 +1,16 @@
 package fr.poslovitch.slimefunx.api.base;
 
 import fr.poslovitch.slimefunx.api.categories.Category;
-import fr.poslovitch.slimefunx.api.interfaces.Hashable;
+import fr.poslovitch.slimefunx.api.interfaces.Identifiable;
 import net.minecraft.server.v1_13_R2.NBTTagCompound;
 import org.apache.commons.lang.Validate;
 import org.bukkit.Material;
 import org.bukkit.craftbukkit.v1_13_R2.inventory.CraftItemStack;
 import org.bukkit.inventory.ItemStack;
 
-public class SlimefunObject implements Hashable {
+public class SlimefunObject implements Identifiable {
 
-    private static final String NBT_SLIMEFUN_HASH = "slimefun:hash";
+    private static final String NBT_SLIMEFUN_ID = "slimefun:id";
 
     private final String id;
     private final Category category;
@@ -30,7 +30,7 @@ public class SlimefunObject implements Hashable {
         // Add the NBTTag to the item
         net.minecraft.server.v1_13_R2.ItemStack nmsStack = CraftItemStack.asNMSCopy(item);
         NBTTagCompound compound = (nmsStack.getTag() != null) ? nmsStack.getTag() : new NBTTagCompound();
-        compound.setString(NBT_SLIMEFUN_HASH, getHash());
+        compound.setString(NBT_SLIMEFUN_ID, id);
         nmsStack.setTag(compound);
         item = CraftItemStack.asBukkitCopy(nmsStack);
 
