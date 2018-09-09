@@ -10,7 +10,7 @@ import org.bukkit.inventory.ItemStack;
 
 public class SlimefunItems {
 
-    public static final SlimefunItem WOODEN_HAMMER = new SlimefunTool("WOODEN_HAMMER",
+    public static final SlimefunTool WOODEN_HAMMER = new SlimefunTool("WOODEN_HAMMER",
             Categories.TOOLS,
             new ItemStack(Material.WOODEN_AXE),
             new String[][]{
