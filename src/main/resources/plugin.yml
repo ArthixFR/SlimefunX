@@ -1,12 +1,11 @@
 name: SlimefunX
-main: fr.poslovitch.slimefunx.SlimefunX
+main: fr.horizons.slimefunx.SlimefunX
 version: ${project.version}
 api-version: 1.13
 
 authors:
-- TheBusyBiscuit
-- Slimefun4 Development Team
+- Arthix
 - Poslovitch
 
-depend:
-- BentoBox
+commands:
+  sfx:
