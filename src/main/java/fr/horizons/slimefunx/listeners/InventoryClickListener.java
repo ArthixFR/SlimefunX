@@ -10,10 +10,7 @@ import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
-import org.bukkit.event.inventory.ClickType;
-import org.bukkit.event.inventory.InventoryAction;
-import org.bukkit.event.inventory.InventoryClickEvent;
-import org.bukkit.event.inventory.InventoryType;
+import org.bukkit.event.inventory.*;
 import org.bukkit.inventory.ItemStack;
 
 import java.util.ArrayList;
@@ -31,8 +28,6 @@ public class InventoryClickListener implements Listener {
         this.itemsManager = plugin.getItemsManager();
         this.blocksManager = plugin.getBlocksManager();
     }
-
-    // TODO: FAIRE LE SHIFT CLICK
 
     @EventHandler
     public void onInventoryClick(InventoryClickEvent e) {
@@ -192,18 +187,6 @@ public class InventoryClickListener implements Listener {
                     p.getInventory().setItem(e.getSlot(), null);
                 }
             }
-
-            System.out.println(e.getClickedInventory().getType());
-            System.out.println(e.getSlotType());
-            System.out.println(p.getOpenInventory().getType());
         }
-
-        System.out.println(" ");
-        System.out.println("Action : " + e.getAction());
-        System.out.println("Click : " + e.getClick());
-        System.out.println("CurrentItem : " + e.getCurrentItem().getType());
-        System.out.println("Cursor : " + e.getCursor().getType());
-        System.out.println("Slot : " + e.getSlot());
-        System.out.println(" ");
     }
 }

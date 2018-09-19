@@ -2,10 +2,7 @@ package fr.horizons.slimefunx;
 
 import fr.horizons.slimefunx.block.BlocksManager;
 import fr.horizons.slimefunx.commands.BaseCommand;
-import fr.horizons.slimefunx.listeners.BlockBreakListener;
-import fr.horizons.slimefunx.listeners.EntityPickupItemListener;
-import fr.horizons.slimefunx.listeners.InventoryClickListener;
-import fr.horizons.slimefunx.listeners.PlayerInteractListener;
+import fr.horizons.slimefunx.listeners.*;
 import fr.horizons.slimefunx.item.ItemsManager;
 import org.bukkit.Bukkit;
 import org.bukkit.command.PluginCommand;
@@ -47,6 +44,7 @@ public final class SlimefunX extends JavaPlugin {
         pm.registerEvents(new BlockBreakListener(this), this);
         pm.registerEvents(new InventoryClickListener(this), this);
         pm.registerEvents(new EntityPickupItemListener(this), this);
+        pm.registerEvents(new InventoryMoveItemListener(this), this);
     }
 
     public static SlimefunX getInstance() {
