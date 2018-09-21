@@ -20,6 +20,8 @@ public class PlayerInteractListener implements Listener {
         this.plugin = plugin;
     }
 
+    // TODO: CHECK SI UNE ENTITÉ A LA POSITION !
+
     @EventHandler
     public void onInteract(PlayerInteractEvent e) {
         SlimefunItem slimefunItem = plugin.getItemsManager().getItemByTag(e.getItem());

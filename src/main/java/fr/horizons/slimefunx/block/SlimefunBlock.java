@@ -1,5 +1,6 @@
 package fr.horizons.slimefunx.block;
 
+import fr.horizons.slimefunx.SlimefunX;
 import fr.horizons.slimefunx.base.Category;
 import fr.horizons.slimefunx.base.SlimefunObject;
 import fr.horizons.slimefunx.interfaces.*;
@@ -18,7 +19,7 @@ import org.bukkit.inventory.meta.ItemMeta;
 import javax.annotation.Nullable;
 import java.util.List;
 
-public abstract class SlimefunBlock extends SlimefunObject implements ICraftable, IResearchable, IPlaceable, IStackable {
+public abstract class SlimefunBlock extends SlimefunObject implements ICraftable, IResearchable, IPlaceable, IStackable, IBreakable {
     private String name;
     private List<String> lore;
 
@@ -129,6 +130,15 @@ public abstract class SlimefunBlock extends SlimefunObject implements ICraftable
     }
 
     public void breakBlock(Location loc) {
+        SlimefunBlock slimefunBlock = SlimefunX.getInstance().getBlocksManager().getBlockByTag(loc.getBlock());
+        if (slimefunBlock != null) {
+            loc.getBlock().setType(Material.AIR);
+            loc.getWorld().dropItemNaturally(loc, slimefunBlock.getItem());
+        }
+    }
 
+    @Override
+    public int stackSize() {
+        return 64;
     }
 }

@@ -2,6 +2,8 @@ name: SlimefunX
 main: fr.horizons.slimefunx.SlimefunX
 version: ${project.version}
 api-version: 1.13
+depend:
+- PacketListenerApi
 
 authors:
 - Arthix
