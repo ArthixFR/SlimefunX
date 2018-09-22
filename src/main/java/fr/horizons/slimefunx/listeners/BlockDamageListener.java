@@ -24,7 +24,7 @@ public class BlockDamageListener implements Listener {
         SlimefunBlock sfBlock = SlimefunX.getInstance().getBlocksManager().getBlockByTag(e.getBlock());
         if (sfBlock == null) return;
         SlimefunItem slimefunItem = itemsManager.getItemByTag(e.getItemInHand());
-        if (slimefunItem != null) BlockDamager.breakingList.put(e.getPlayer().getUniqueId(), new BlockDamager(e.getPlayer(), e.getBlock(), BlockDamager.getBlockDurability(sfBlock, slimefunItem)));
-        else BlockDamager.breakingList.put(e.getPlayer().getUniqueId(), new BlockDamager(e.getPlayer(), e.getBlock(), BlockDamager.getBlockDurability(sfBlock, e.getItemInHand())));
+        if (slimefunItem != null) BlockDamager.breakingList.put(e.getPlayer().getUniqueId(), new BlockDamager(e.getPlayer(), e.getBlock(), slimefunItem.getItem(), BlockDamager.getBlockDurability(sfBlock, slimefunItem)));
+        else BlockDamager.breakingList.put(e.getPlayer().getUniqueId(), new BlockDamager(e.getPlayer(), e.getBlock(), e.getItemInHand(), BlockDamager.getBlockDurability(sfBlock, e.getItemInHand())));
     }
 }

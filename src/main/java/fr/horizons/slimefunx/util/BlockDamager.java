@@ -3,6 +3,7 @@ package fr.horizons.slimefunx.util;
 import fr.horizons.slimefunx.SlimefunX;
 import fr.horizons.slimefunx.block.SlimefunBlock;
 import fr.horizons.slimefunx.item.SlimefunItem;
+import fr.horizons.slimefunx.item.SlimefunTool;
 import net.minecraft.server.v1_13_R2.BlockPosition;
 import net.minecraft.server.v1_13_R2.PacketPlayOutBlockBreakAnimation;
 import org.bukkit.block.Block;
@@ -21,12 +22,14 @@ public class BlockDamager {
 
     private Player p;
     private Block block;
+    private ItemStack breaker;
     private int time;
     private boolean cancel;
 
-    public BlockDamager(Player p, Block block, int time) {
+    public BlockDamager(Player p, Block block, ItemStack breaker, int time) {
         this.p = p;
         this.block = block;
+        this.breaker = breaker;
         this.time = time;
         this.cancel = false;
 
@@ -51,7 +54,7 @@ public class BlockDamager {
                 if (i == 0) {
                     breakingList.remove(p.getUniqueId());
                     ((CraftPlayer)p).getHandle().playerConnection.sendPacket(new PacketPlayOutBlockBreakAnimation(0, blockPosition, -1));
-                    sfBlock.breakBlock(block.getLocation());
+                    sfBlock.breakBlock(p, block.getLocation(), breaker);
                     cancel();
                     return;
                 }
@@ -86,5 +89,9 @@ public class BlockDamager {
 
     public static int getBlockDurability(SlimefunBlock sfBlock, ItemStack is) {
         return sfBlock.vanillaToolDamage() == null ? sfBlock.baseTickBreakTime() : sfBlock.vanillaToolDamage().getOrDefault(is.getType(), sfBlock.baseTickBreakTime());
+    }
+
+    public ItemStack getBreaker() {
+        return breaker;
     }
 }

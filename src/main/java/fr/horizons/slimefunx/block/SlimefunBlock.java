@@ -4,6 +4,9 @@ import fr.horizons.slimefunx.SlimefunX;
 import fr.horizons.slimefunx.base.Category;
 import fr.horizons.slimefunx.base.SlimefunObject;
 import fr.horizons.slimefunx.interfaces.*;
+import fr.horizons.slimefunx.item.SlimefunItem;
+import fr.horizons.slimefunx.item.SlimefunTool;
+import fr.horizons.slimefunx.util.Durability;
 import fr.horizons.slimefunx.util.InventoryUtils;
 import fr.horizons.slimefunx.util.NBTListType;
 import net.minecraft.server.v1_13_R2.*;
@@ -11,6 +14,7 @@ import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.craftbukkit.v1_13_R2.CraftWorld;
 import org.bukkit.craftbukkit.v1_13_R2.inventory.CraftItemStack;
+import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.Damageable;
@@ -129,11 +133,25 @@ public abstract class SlimefunBlock extends SlimefunObject implements ICraftable
         }
     }
 
-    public void breakBlock(Location loc) {
+    public void breakBlock(Player p, Location loc, ItemStack breaker) {
         SlimefunBlock slimefunBlock = SlimefunX.getInstance().getBlocksManager().getBlockByTag(loc.getBlock());
         if (slimefunBlock != null) {
             loc.getBlock().setType(Material.AIR);
             loc.getWorld().dropItemNaturally(loc, slimefunBlock.getItem());
+            SlimefunItem slimefunItem = SlimefunX.getInstance().getItemsManager().getItemByTag(breaker);
+            if (slimefunItem != null) {
+                if (slimefunItem instanceof SlimefunTool) {
+                    if (((SlimefunTool) slimefunItem).hasDurability()) {
+                        p.getInventory().setItemInMainHand(Durability.setDurability(p.getInventory().getItemInMainHand(), (Durability.getDurability(p.getInventory().getItemInMainHand()) - 1)));
+                    }
+                }
+            } else {
+                if (breaker.hasItemMeta()) {
+                    Damageable damageable = (Damageable)breaker.getItemMeta();
+                    damageable.setDamage(damageable.getDamage() + 1);
+                    breaker.setItemMeta((ItemMeta)damageable);
+                }
+            }
         }
     }
 
