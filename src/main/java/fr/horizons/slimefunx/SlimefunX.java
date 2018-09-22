@@ -70,8 +70,8 @@ public final class SlimefunX extends JavaPlugin {
                     PacketPlayInBlockDig.EnumPlayerDigType digType = ((PacketPlayInBlockDig) packet.getPacket()).d();
                     Player p = packet.getPlayer();
                     if (digType.equals(PacketPlayInBlockDig.EnumPlayerDigType.ABORT_DESTROY_BLOCK) || digType.equals(PacketPlayInBlockDig.EnumPlayerDigType.STOP_DESTROY_BLOCK)) {
-                        BlockDamager blockDamager = BlockDamager.breakingList.get(p.getUniqueId());
-                        if (blockDamager != null) {
+                        if (BlockDamager.breakingList.containsKey(p.getUniqueId())) {
+                            BlockDamager blockDamager = BlockDamager.breakingList.get(p.getUniqueId());
                             blockDamager.setCancelled(true);
                             BlockDamager.breakingList.remove(p.getUniqueId());
                         }
