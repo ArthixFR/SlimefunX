@@ -6,9 +6,11 @@ import fr.horizons.slimefunx.item.SlimefunItem;
 import fr.horizons.slimefunx.item.SlimefunTool;
 import net.minecraft.server.v1_13_R2.BlockPosition;
 import net.minecraft.server.v1_13_R2.PacketPlayOutBlockBreakAnimation;
+import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.craftbukkit.v1_13_R2.entity.CraftPlayer;
 import org.bukkit.entity.Player;
+import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.scheduler.BukkitRunnable;
 
@@ -33,14 +35,15 @@ public class BlockDamager {
         this.time = time;
         this.cancel = false;
 
-        SlimefunBlock sfBlock = SlimefunX.getInstance().getBlocksManager().getBlockByTag(block);
-        if (sfBlock == null) return;
-
         new BukkitRunnable() {
             int i = time;
             BlockPosition blockPosition = new BlockPosition(block.getX(), block.getY(), block.getZ());
             @Override
             public void run() {
+                if (time == -1) {
+                    cancel();
+                    return;
+                }
                 if (BlockDamager.this.isCancelled()) {
                     breakingList.remove(p.getUniqueId());
                     ((CraftPlayer)p).getHandle().playerConnection.sendPacket(new PacketPlayOutBlockBreakAnimation(0, blockPosition, -1));
@@ -54,7 +57,17 @@ public class BlockDamager {
                 if (i == 0) {
                     breakingList.remove(p.getUniqueId());
                     ((CraftPlayer)p).getHandle().playerConnection.sendPacket(new PacketPlayOutBlockBreakAnimation(0, blockPosition, -1));
-                    sfBlock.breakBlock(p, block.getLocation(), breaker);
+                    SlimefunBlock sfBlock = SlimefunX.getInstance().getBlocksManager().getBlockByTag(block);
+                    SlimefunItem sfItem = SlimefunX.getInstance().getItemsManager().getItemByTag(breaker);
+                    if (sfItem instanceof SlimefunTool) {
+                        ((SlimefunTool) sfItem).breakBlockEvent(p, block);
+                        if (sfBlock != null) sfBlock.breakBlock(p, block.getLocation(), breaker, false);
+                        else block.breakNaturally(breaker);
+                    } else {
+                        if (sfBlock != null) sfBlock.breakBlock(p, block.getLocation(), breaker, true);
+                        else block.breakNaturally(breaker);
+                    }
+
                     cancel();
                     return;
                 }
@@ -83,7 +96,19 @@ public class BlockDamager {
         this.cancel = cancel;
     }
 
+    public static int getBlockDurability(Block block, SlimefunItem sfItem) {
+        int tickByHardness = Math.round(((1 + block.getType().getHardness()) * 5) * 20);
+        if (block.getType().getHardness() == -1) tickByHardness = -1;
+        if (sfItem instanceof SlimefunTool) {
+            return ((SlimefunTool) sfItem).vanillaBlockBreakTime() == null ? tickByHardness : ((SlimefunTool) sfItem).vanillaBlockBreakTime().getOrDefault(block.getType(), tickByHardness);
+        }
+        return tickByHardness;
+    }
+
     public static int getBlockDurability(SlimefunBlock sfBlock, SlimefunItem sfItem) {
+        if (sfItem instanceof SlimefunTool) {
+            return ((SlimefunTool) sfItem).slimefunBlockBreakTime() == null ? sfBlock.slimefunToolDamage() == null ? sfBlock.baseTickBreakTime() : sfBlock.slimefunToolDamage().getOrDefault(sfItem, sfBlock.baseTickBreakTime()) : ((SlimefunTool) sfItem).slimefunBlockBreakTime().getOrDefault(sfBlock, sfBlock.baseTickBreakTime());
+        }
         return sfBlock.slimefunToolDamage() == null ? sfBlock.baseTickBreakTime() : sfBlock.slimefunToolDamage().getOrDefault(sfItem, sfBlock.baseTickBreakTime());
     }
 

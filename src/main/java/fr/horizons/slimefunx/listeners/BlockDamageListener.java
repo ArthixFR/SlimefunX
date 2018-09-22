@@ -22,9 +22,14 @@ public class BlockDamageListener implements Listener {
     @EventHandler
     public void onBlockDamage(BlockDamageEvent e) {
         SlimefunBlock sfBlock = SlimefunX.getInstance().getBlocksManager().getBlockByTag(e.getBlock());
-        if (sfBlock == null) return;
-        SlimefunItem slimefunItem = itemsManager.getItemByTag(e.getItemInHand());
-        if (slimefunItem != null) BlockDamager.breakingList.put(e.getPlayer().getUniqueId(), new BlockDamager(e.getPlayer(), e.getBlock(), slimefunItem.getItem(), BlockDamager.getBlockDurability(sfBlock, slimefunItem)));
+        SlimefunItem sfItem = itemsManager.getItemByTag(e.getItemInHand());
+
+        if (sfItem == null && sfBlock == null) return;
+
+        if (sfItem != null) {
+            if (sfBlock != null) BlockDamager.breakingList.put(e.getPlayer().getUniqueId(), new BlockDamager(e.getPlayer(), e.getBlock(), e.getItemInHand(), BlockDamager.getBlockDurability(sfBlock, sfItem)));
+            else BlockDamager.breakingList.put(e.getPlayer().getUniqueId(), new BlockDamager(e.getPlayer(), e.getBlock(), e.getItemInHand(), BlockDamager.getBlockDurability(e.getBlock(), sfItem)));
+        }
         else BlockDamager.breakingList.put(e.getPlayer().getUniqueId(), new BlockDamager(e.getPlayer(), e.getBlock(), e.getItemInHand(), BlockDamager.getBlockDurability(sfBlock, e.getItemInHand())));
     }
 }

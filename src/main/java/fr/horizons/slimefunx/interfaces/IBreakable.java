@@ -8,6 +8,7 @@ import java.util.Map;
 public interface IBreakable {
 
     int baseTickBreakTime();
+    @Deprecated
     Map<SlimefunObject, Integer> slimefunToolDamage();
     Map<Material, Integer> vanillaToolDamage();
 }

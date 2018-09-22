@@ -8,6 +8,7 @@ import fr.horizons.slimefunx.item.SlimefunItem;
 import fr.horizons.slimefunx.item.SlimefunTool;
 import fr.horizons.slimefunx.util.LocationUtils;
 import org.bukkit.Location;
+import org.bukkit.Material;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
@@ -27,11 +28,13 @@ public class PlayerInteractListener implements Listener {
         SlimefunItem slimefunItem = plugin.getItemsManager().getItemByTag(e.getItem());
         SlimefunBlock slimefunBlock = plugin.getBlocksManager().getBlockByTag(e.getItem());
         if (slimefunItem instanceof SlimefunTool) {
+            if (e.getAction().equals(Action.RIGHT_CLICK_BLOCK) && (e.getClickedBlock().getType().equals(Material.DIRT) || e.getClickedBlock().getType().equals(Material.COARSE_DIRT) || e.getClickedBlock().getType().equals(Material.GRASS_BLOCK) || e.getClickedBlock().getType().equals(Material.GRASS_PATH))) e.setCancelled(true);
             ((SlimefunTool) slimefunItem).interactEvent(e);
         }
         if (slimefunBlock instanceof SlimefunStaticBlock || slimefunBlock instanceof SlimefunMachine) {
             slimefunBlock.interactEvent(e);
-            if (e.getAction().equals(Action.RIGHT_CLICK_BLOCK)) {
+            if ((e.getAction().equals(Action.RIGHT_CLICK_BLOCK) && !e.getClickedBlock().getType().isInteractable()) || (e.getAction().equals(Action.RIGHT_CLICK_BLOCK) && e.getClickedBlock().getType().isInteractable() && e.getPlayer().isSneaking())) {
+                e.setCancelled(true);
                 Location newLoc = LocationUtils.getPlaceLocation(e.getClickedBlock().getLocation(), e.getBlockFace());
                 if (LocationUtils.isPlaceEmpty(newLoc)) slimefunBlock.placeBlock(e.getItem(), newLoc);
             }

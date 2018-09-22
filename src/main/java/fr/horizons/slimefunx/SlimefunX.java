@@ -22,6 +22,13 @@ public final class SlimefunX extends JavaPlugin {
     private ItemsManager itemsManager;
     private BlocksManager blocksManager;
 
+    /*
+     * IMPORTANT :
+     *
+     * Pour créer des SlimefunTools, il faut OBLIGATOIREMENT utiliser des diamond_hoe !
+     *
+     */
+
     @Override
     public void onEnable() {
         instance = this;

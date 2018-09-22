@@ -133,23 +133,25 @@ public abstract class SlimefunBlock extends SlimefunObject implements ICraftable
         }
     }
 
-    public void breakBlock(Player p, Location loc, ItemStack breaker) {
+    public void breakBlock(Player p, Location loc, ItemStack breaker, boolean damage) {
         SlimefunBlock slimefunBlock = SlimefunX.getInstance().getBlocksManager().getBlockByTag(loc.getBlock());
         if (slimefunBlock != null) {
             loc.getBlock().setType(Material.AIR);
             loc.getWorld().dropItemNaturally(loc, slimefunBlock.getItem());
-            SlimefunItem slimefunItem = SlimefunX.getInstance().getItemsManager().getItemByTag(breaker);
-            if (slimefunItem != null) {
-                if (slimefunItem instanceof SlimefunTool) {
-                    if (((SlimefunTool) slimefunItem).hasDurability()) {
-                        p.getInventory().setItemInMainHand(Durability.setDurability(p.getInventory().getItemInMainHand(), (Durability.getDurability(p.getInventory().getItemInMainHand()) - 1)));
+            if (damage) {
+                SlimefunItem slimefunItem = SlimefunX.getInstance().getItemsManager().getItemByTag(breaker);
+                if (slimefunItem != null) {
+                    if (slimefunItem instanceof SlimefunTool) {
+                        if (((SlimefunTool) slimefunItem).hasDurability()) {
+                            p.getInventory().setItemInMainHand(Durability.setDurability(p.getInventory().getItemInMainHand(), (Durability.getDurability(p.getInventory().getItemInMainHand()) - 1)));
+                        }
                     }
-                }
-            } else {
-                if (breaker.hasItemMeta()) {
-                    Damageable damageable = (Damageable)breaker.getItemMeta();
-                    damageable.setDamage(damageable.getDamage() + 1);
-                    breaker.setItemMeta((ItemMeta)damageable);
+                } else {
+                    if (breaker.hasItemMeta()) {
+                        Damageable damageable = (Damageable) breaker.getItemMeta();
+                        damageable.setDamage(damageable.getDamage() + 1);
+                        breaker.setItemMeta((ItemMeta) damageable);
+                    }
                 }
             }
         }

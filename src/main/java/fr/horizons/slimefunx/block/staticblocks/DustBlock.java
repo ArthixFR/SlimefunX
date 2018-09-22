@@ -1,10 +1,8 @@
 package fr.horizons.slimefunx.block.staticblocks;
 
-import com.google.common.collect.ImmutableMap;
 import fr.horizons.slimefunx.base.SlimefunObject;
 import fr.horizons.slimefunx.block.SlimefunStaticBlock;
 import fr.horizons.slimefunx.list.Categories;
-import fr.horizons.slimefunx.list.ItemList;
 import org.bukkit.Material;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.ItemStack;
@@ -15,7 +13,7 @@ import java.util.Map;
 public class DustBlock extends SlimefunStaticBlock {
 
     public DustBlock() {
-        super("dust_block", Categories.STATIC_BLOCKS, new ItemStack(Material.DIAMOND_AXE), 4, "§fDust Block", null);
+        super("dust_block", Categories.STATIC_BLOCKS, new ItemStack(Material.DIAMOND_HOE), 4, "§fDust Block", null);
     }
 
     @Override
@@ -43,10 +41,7 @@ public class DustBlock extends SlimefunStaticBlock {
 
     @Override
     public Map<SlimefunObject, Integer> slimefunToolDamage() {
-        return ImmutableMap.<SlimefunObject, Integer>builder()
-                .put(ItemList.WOODEN_HAMMER, 15)
-                .put(ItemList.STONE_HAMMER, 10)
-                .build();
+        return null;
     }
 
     @Override

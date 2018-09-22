@@ -1,7 +1,9 @@
 package fr.horizons.slimefunx.listeners;
 
 import fr.horizons.slimefunx.SlimefunX;
+import fr.horizons.slimefunx.block.SlimefunBlock;
 import fr.horizons.slimefunx.item.SlimefunItem;
+import fr.horizons.slimefunx.item.SlimefunRessource;
 import fr.horizons.slimefunx.item.SlimefunTool;
 import fr.horizons.slimefunx.util.Durability;
 import org.bukkit.event.EventHandler;
@@ -20,13 +22,13 @@ public class BlockBreakListener implements Listener {
     public void onBlockBreak(BlockBreakEvent e) {
         PlayerInventory playerInventory = e.getPlayer().getInventory();
         SlimefunItem slimefunItem = plugin.getItemsManager().getItemByTag(playerInventory.getItemInMainHand());
-        if (slimefunItem == null) return;
-        if (slimefunItem instanceof SlimefunTool) {
+        SlimefunBlock slimefunBlock = plugin.getBlocksManager().getBlockByTag(playerInventory.getItemInMainHand());
+        if (slimefunBlock != null) {
             e.setCancelled(true);
-            ((SlimefunTool) slimefunItem).breakBlockEvent(e);
-            if (((SlimefunTool) slimefunItem).hasDurability()) {
-                playerInventory.setItemInMainHand(Durability.setDurability(playerInventory.getItemInMainHand(), Durability.getDurability(playerInventory.getItemInMainHand()) - 1));
-            }
+            return;
         }
+        if (slimefunItem instanceof SlimefunTool) {
+            ((SlimefunTool) slimefunItem).breakBlockEvent(e.getPlayer(), e.getBlock());
+        } else if (slimefunItem instanceof SlimefunRessource) e.setCancelled(true);
     }
 }
