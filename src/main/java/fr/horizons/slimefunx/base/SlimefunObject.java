@@ -16,6 +16,10 @@ public class SlimefunObject implements IIdentifiable {
     private final Category category;
     private ItemStack item;
 
+    public SlimefunObject(String id, ItemStack item, Category category) {
+        this(id, item, category, -1);
+    }
+
     public SlimefunObject(String id, ItemStack item, Category category, int textureId) {
         // Validation - make sure that none of the specified value is illegal.
         Validate.notNull(id, "Id cannot be null.");
