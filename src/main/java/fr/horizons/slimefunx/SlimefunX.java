@@ -76,11 +76,15 @@ public final class SlimefunX extends JavaPlugin {
                 if (packet.getPacket() instanceof PacketPlayInBlockDig) {
                     PacketPlayInBlockDig.EnumPlayerDigType digType = ((PacketPlayInBlockDig) packet.getPacket()).d();
                     Player p = packet.getPlayer();
-                    if (digType.equals(PacketPlayInBlockDig.EnumPlayerDigType.ABORT_DESTROY_BLOCK) || digType.equals(PacketPlayInBlockDig.EnumPlayerDigType.STOP_DESTROY_BLOCK)) {
-                        if (BlockDamager.breakingList.containsKey(p.getUniqueId())) {
-                            BlockDamager blockDamager = BlockDamager.breakingList.get(p.getUniqueId());
-                            blockDamager.setCancelled(true);
-                            BlockDamager.breakingList.remove(p.getUniqueId());
+                    if (p != null) {
+                        if (digType.equals(PacketPlayInBlockDig.EnumPlayerDigType.ABORT_DESTROY_BLOCK) || digType.equals(PacketPlayInBlockDig.EnumPlayerDigType.STOP_DESTROY_BLOCK)) {
+                            if (BlockDamager.breakingList != null) {
+                                if (BlockDamager.breakingList.containsKey(p.getUniqueId())) {
+                                    BlockDamager blockDamager = BlockDamager.breakingList.get(p.getUniqueId());
+                                    blockDamager.setCancelled(true);
+                                    BlockDamager.breakingList.remove(p.getUniqueId());
+                                }
+                            }
                         }
                     }
                 }
