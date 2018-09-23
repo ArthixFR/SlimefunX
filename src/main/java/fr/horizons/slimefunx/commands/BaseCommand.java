@@ -1,6 +1,7 @@
 package fr.horizons.slimefunx.commands;
 
 import fr.horizons.slimefunx.SlimefunX;
+import fr.horizons.slimefunx.block.SlimefunBlock;
 import fr.horizons.slimefunx.item.SlimefunItem;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -28,17 +29,22 @@ public class BaseCommand implements CommandExecutor, TabCompleter {
             if (args[0].equalsIgnoreCase("give")) {
                 if (args.length < 2) return true;
 
-                SlimefunItem slimefunItem = plugin.getItemsManager().getItemById(args[1]);
-                if (slimefunItem == null) {
-                    System.out.println("sfi null");
-                    return true;
-                }
                 PlayerInventory playerInventory = p.getInventory();
                 if (playerInventory.firstEmpty() == -1) {
                     System.out.println("no space");
                     return true;
                 }
-                playerInventory.setItem(p.getInventory().firstEmpty(), slimefunItem.getItem());
+
+                SlimefunItem slimefunItem = plugin.getItemsManager().getItemById(args[1]);
+                SlimefunBlock slimefunBlock = plugin.getBlocksManager().getBlockById(args[1]);
+                if (slimefunBlock != null) {
+                    playerInventory.setItem(p.getInventory().firstEmpty(), slimefunBlock.getItem());
+                } else if (slimefunItem != null) {
+                    playerInventory.setItem(p.getInventory().firstEmpty(), slimefunItem.getItem());
+                } else {
+                    System.out.println("sfi null");
+                    return true;
+                }
             }
         }
         return true;
@@ -58,6 +64,7 @@ public class BaseCommand implements CommandExecutor, TabCompleter {
             list.add("give");
         } else if (args.length == 2) {
             plugin.getItemsManager().getItemsSet().forEach(slimefunItem -> list.add(slimefunItem.getId()));
+            plugin.getBlocksManager().getBlockSet().forEach(slimefunBlock -> list.add(slimefunBlock.getId()));
         }
         return list;
     }
