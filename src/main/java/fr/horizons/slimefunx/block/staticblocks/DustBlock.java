@@ -13,7 +13,7 @@ import java.util.Map;
 public class DustBlock extends SlimefunStaticBlock {
 
     public DustBlock() {
-        super("dust_block", Categories.STATIC_BLOCKS, new ItemStack(Material.DIAMOND_HOE), 4, "§fDust Block", null);
+        super("dust_block", Categories.STATIC_BLOCKS, new ItemStack(Material.DIAMOND_AXE), 2, "§fDust Block", null);
     }
 
     @Override
