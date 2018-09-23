@@ -6,11 +6,9 @@ import fr.horizons.slimefunx.item.SlimefunItem;
 import fr.horizons.slimefunx.item.SlimefunTool;
 import net.minecraft.server.v1_13_R2.BlockPosition;
 import net.minecraft.server.v1_13_R2.PacketPlayOutBlockBreakAnimation;
-import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.craftbukkit.v1_13_R2.entity.CraftPlayer;
 import org.bukkit.entity.Player;
-import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.scheduler.BukkitRunnable;
 
