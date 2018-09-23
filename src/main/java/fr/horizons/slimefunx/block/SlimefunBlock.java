@@ -147,6 +147,8 @@ public abstract class SlimefunBlock extends SlimefunObject implements ICraftable
                         }
                     }
                 } else {
+                    SlimefunBlock breakerSlimefunBlock = SlimefunX.getInstance().getBlocksManager().getBlockByTag(breaker);
+                    if (breakerSlimefunBlock != null) return;
                     if (breaker.hasItemMeta()) {
                         Damageable damageable = (Damageable) breaker.getItemMeta();
                         damageable.setDamage(damageable.getDamage() + 1);
