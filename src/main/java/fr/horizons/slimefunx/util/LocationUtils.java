@@ -30,13 +30,16 @@ public class LocationUtils {
     }
 
     public static boolean isPlaceEmpty(Location loc) {
-        Location centerLoc = loc.clone();
-        centerLoc.add(0.5, 0.5, 0.5);
         for (Entity e : loc.getChunk().getEntities()) {
-            if (e.getLocation().distance(centerLoc) <= 1.0) {
+            if (e.getLocation().distance(getBlockCenter(loc)) <= 1.0) {
                 return false;
             }
         }
         return true;
+    }
+
+    public static Location getBlockCenter(Location loc) {
+        Location centerLoc = loc.clone();
+        return centerLoc.add(0.5, 0.5, 0.5);
     }
 }
