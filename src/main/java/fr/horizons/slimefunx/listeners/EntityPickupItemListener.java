@@ -5,6 +5,7 @@ import fr.horizons.slimefunx.base.SlimefunObject;
 import fr.horizons.slimefunx.block.BlocksManager;
 import fr.horizons.slimefunx.interfaces.IStackable;
 import fr.horizons.slimefunx.item.ItemsManager;
+import fr.horizons.slimefunx.util.InventoryUtils;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -42,7 +43,7 @@ public class EntityPickupItemListener implements Listener {
             for (ItemStack is : p.getInventory().getContents()) {
                 if (is == null) continue;
                 if (!is.hasItemMeta()) continue;
-                if (is.getItemMeta().equals(sfPickup.getItem().getItemMeta()) && is.getType().equals(sfPickup.getItem().getType())) list.add(is);
+                if (InventoryUtils.isEqual(sfPickup, is)) list.add(is);
             }
 
             int count = e.getItem().getItemStack().getAmount();

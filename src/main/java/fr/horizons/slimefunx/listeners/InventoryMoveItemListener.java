@@ -5,6 +5,7 @@ import fr.horizons.slimefunx.base.SlimefunObject;
 import fr.horizons.slimefunx.block.BlocksManager;
 import fr.horizons.slimefunx.interfaces.IStackable;
 import fr.horizons.slimefunx.item.ItemsManager;
+import fr.horizons.slimefunx.util.InventoryUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.event.EventHandler;
@@ -45,8 +46,7 @@ public class InventoryMoveItemListener implements Listener {
         for (ItemStack item : inv.getContents()) {
             if (item == null) continue;
             if (!item.hasItemMeta()) continue;
-            if (item.getItemMeta().equals(sfItem.getItem().getItemMeta()) && item.getType().equals(sfItem.getItem().getType()))
-                list.add(item);
+            if (InventoryUtils.isEqual(sfItem, item)) list.add(item);
         }
 
         int count = is.getAmount();
@@ -59,7 +59,7 @@ public class InventoryMoveItemListener implements Listener {
                     item.setAmount(item.getAmount() + count);
 
                     Bukkit.getScheduler().runTaskLater(plugin, () -> {
-                        int first = getFirst(finalSfItem.getItem(), e.getSource());
+                        int first = getFirst(finalSfItem, e.getSource());
                         if (first != -1) {
                             ItemStack firstIs = e.getSource().getItem(first);
                             System.out.println(firstIs.getAmount());
@@ -75,7 +75,7 @@ public class InventoryMoveItemListener implements Listener {
                     item.setAmount(((IStackable) sfItem).stackSize());
 
                     Bukkit.getScheduler().runTaskLater(plugin, () -> {
-                        int first = getFirst(finalSfItem.getItem(), e.getSource());
+                        int first = getFirst(finalSfItem, e.getSource());
                         if (first != -1) {
                             ItemStack firstIs = e.getSource().getItem(first);
                             System.out.println(firstIs.getAmount());
@@ -94,7 +94,7 @@ public class InventoryMoveItemListener implements Listener {
             int finalDifference = difference;
 
             Bukkit.getScheduler().runTaskLater(plugin, () -> {
-                int first = getFirst(finalSfItem.getItem(), e.getSource());
+                int first = getFirst(finalSfItem, e.getSource());
                 if (first != -1) {
                     ItemStack firstIs = e.getSource().getItem(first);
                     firstIs.setAmount(firstIs.getAmount() - finalDifference);
@@ -104,12 +104,12 @@ public class InventoryMoveItemListener implements Listener {
         }
     }
 
-    public int getFirst(ItemStack is, Inventory inv) {
+    public int getFirst(SlimefunObject slimefunObject, Inventory inv) {
         for (int i = 0; i < inv.getSize(); i++) {
             ItemStack item = inv.getItem(i);
             if (item == null) continue;
             if (!item.hasItemMeta()) continue;
-            if (item.getItemMeta().equals(is.getItemMeta()) && item.getType().equals(is.getType())) return i;
+            if (InventoryUtils.isEqual(slimefunObject, item)) return i;
         }
         return -1;
     }
