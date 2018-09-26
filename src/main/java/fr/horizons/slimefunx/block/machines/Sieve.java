@@ -60,11 +60,8 @@ public class Sieve extends SlimefunMachine {
     public void interactEvent(PlayerInteractEvent e) { // TODO: ANIMATION !
         Block b = e.getClickedBlock();
         NBTTagCompound nbtTagCompound = (NBTTagCompound) InventoryUtils.getBlockData(b, "SieveData");
-        System.out.println(nbtTagCompound != null ? nbtTagCompound.getKeys() : "null");
-        System.out.println(InventoryUtils.isEqual(BlockList.DUST_BLOCK, e.getItem()));
 
         if (nbtTagCompound == null && (e.getMaterial().equals(Material.GRAVEL) || e.getMaterial().equals(Material.SAND) || InventoryUtils.isEqual(BlockList.DUST_BLOCK, e.getItem()))) {
-            System.out.println("No progress !");
             NBTTagCompound compound = new NBTTagCompound();
             compound.setInt("progress", 0);
             compound.setString("block", (InventoryUtils.isEqual(BlockList.DUST_BLOCK, e.getItem()) ? BlockList.DUST_BLOCK.getId() : e.getMaterial().getKey().toString()));
@@ -79,7 +76,6 @@ public class Sieve extends SlimefunMachine {
             if (nbtTagCompound != null) {
                 int progress = nbtTagCompound.getInt("progress");
                 String material = nbtTagCompound.getString("block");
-                System.out.println("Progress : " + progress);
                 if (progress < 8) { // TODO: RENDRE CA VARIABLE ?
                     nbtTagCompound.setInt("progress", progress + 1);
                     InventoryUtils.setBlockData(b, "SieveData", nbtTagCompound);
