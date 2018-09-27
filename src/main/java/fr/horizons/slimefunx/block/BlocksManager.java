@@ -64,10 +64,9 @@ public class BlocksManager {
         if (!(te instanceof TileEntityMobSpawner)) return sfi[0];
         NBTTagCompound compound = te.aa_();
         if (compound != null) {
-            String item = compound.getCompound("SpawnData").getList("ArmorItems", NBTListType.COMPOUND).getCompound(3).getString("id");
-            int damage = compound.getCompound("SpawnData").getList("ArmorItems", NBTListType.COMPOUND).getCompound(3).getCompound("tag").getInt("Damage");
+            String id = compound.getCompound("SpawnData").getList("ArmorItems", NBTListType.COMPOUND).getCompound(3).getString(SlimefunObject.NBT_SLIMEFUN_ID);
             getBlocks().forEach((s, slimefunBlock) -> {
-                if (slimefunBlock.getItem().getType().equals(Material.matchMaterial(item.replace("minecraft:", ""))) && slimefunBlock.getTextureId() == damage) {
+                if (slimefunBlock.getId().equals(id)) {
                     sfi[0] = slimefunBlock;
                     return;
                 }

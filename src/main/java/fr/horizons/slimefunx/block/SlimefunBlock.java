@@ -110,7 +110,7 @@ public abstract class SlimefunBlock extends SlimefunObject implements ICraftable
             armorItems.add(new NBTTagCompound());
             armorItems.add(new NBTTagCompound());
             armorItems.add(new NBTTagCompound());
-            armorItems.add(InventoryUtils.convertItemStackToCompound(item));
+            armorItems.add(InventoryUtils.convertItemStackToCompound(item, getId()));
 
             spawnData.set("Pose", new NBTTagCompound());
             NBTTagCompound pose = spawnData.getCompound("Pose");

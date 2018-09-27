@@ -24,11 +24,12 @@ public class InventoryUtils {
         return -1;
     }
 
-    public static NBTTagCompound convertItemStackToCompound(ItemStack is) {
+    public static NBTTagCompound convertItemStackToCompound(ItemStack is, String id) {
         NBTTagCompound nbt = new NBTTagCompound();
 
         nbt.setByte("Count", (byte) is.getAmount());
         nbt.setString("id", is.getType().getKey().toString());
+        nbt.setString(SlimefunObject.NBT_SLIMEFUN_ID, id);
         if (is.hasItemMeta()) {
             ItemMeta im = is.getItemMeta();
             nbt.set("tag", new NBTTagCompound());
