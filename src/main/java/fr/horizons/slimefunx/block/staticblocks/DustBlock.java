@@ -1,5 +1,6 @@
 package fr.horizons.slimefunx.block.staticblocks;
 
+import fr.horizons.slimefunx.base.Category;
 import fr.horizons.slimefunx.base.SlimefunObject;
 import fr.horizons.slimefunx.block.SlimefunStaticBlock;
 import fr.horizons.slimefunx.list.Categories;
@@ -7,13 +8,14 @@ import org.bukkit.Material;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.ItemStack;
 
+import javax.annotation.Nullable;
+import java.util.List;
 import java.util.Map;
 
 
 public class DustBlock extends SlimefunStaticBlock {
-
-    public DustBlock() {
-        super("dust_block", Categories.STATIC_BLOCKS, new ItemStack(Material.DIAMOND_AXE), 2, "§fDust Block", null);
+    public DustBlock(String id, Category category, ItemStack item, int textureId, @Nullable String name, @Nullable List<String> lore) {
+        super(id, category, item, textureId, name, lore);
     }
 
     @Override

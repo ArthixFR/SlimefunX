@@ -1,6 +1,7 @@
 package fr.horizons.slimefunx.item.tools;
 
 import com.google.common.collect.ImmutableMap;
+import fr.horizons.slimefunx.base.Category;
 import fr.horizons.slimefunx.base.SlimefunObject;
 import fr.horizons.slimefunx.block.SlimefunBlock;
 import fr.horizons.slimefunx.item.SlimefunTool;
@@ -18,12 +19,13 @@ import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.PlayerInventory;
 
+import javax.annotation.Nullable;
+import java.util.List;
 import java.util.Map;
 
 public class WoodenHammer extends SlimefunTool {
-
-    public WoodenHammer() {
-        super("wooden_hammer", Categories.TOOLS, new ItemStack(Material.DIAMOND_HOE), 2, "§fWooden hammer", null);
+    public WoodenHammer(String id, Category category, ItemStack item, int textureId, @Nullable String name, @Nullable List<String> lore) {
+        super(id, category, item, textureId, name, lore);
     }
 
     @Override
