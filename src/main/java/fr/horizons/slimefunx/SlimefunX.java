@@ -25,8 +25,14 @@ public final class SlimefunX extends JavaPlugin {
     /*
      * IMPORTANT :
      *
-     * Pour créer des SlimefunTools, il faut OBLIGATOIREMENT utiliser des diamond_hoe !
+     *  Material a utiliser :
      *
+     *  SlimefunTools : DIAMOND_HOE, IRON_HOE
+     *  SlimefunRessources : DIAMOND_SHOVEL, IRON_SHOVEL
+     *  SlimefunBlock (Static & Machines) : DIAMOND_AXE, IRON_AXE
+     *  SlimefunMultiblock : ?
+     *
+     *  Utilitaires (Changement de state ou autres) : DIAMOND_PICKAXE, IRON_PICKAXE
      */
 
     @Override

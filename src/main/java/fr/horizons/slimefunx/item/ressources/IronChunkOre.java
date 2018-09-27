@@ -7,7 +7,7 @@ import org.bukkit.inventory.ItemStack;
 
 public class IronChunkOre extends SlimefunRessource {
     public IronChunkOre() {
-        super("iron_chunk_ore", Categories.RESSOURCES, new ItemStack(Material.DIAMOND_AXE), 4, "§fBroken Iron Ore", null);
+        super("iron_chunk_ore", Categories.RESSOURCES, new ItemStack(Material.DIAMOND_SHOVEL), 1, "§fBroken Iron Ore", null);
     }
 
     @Override
