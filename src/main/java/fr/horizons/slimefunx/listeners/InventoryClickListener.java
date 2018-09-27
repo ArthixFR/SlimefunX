@@ -32,7 +32,6 @@ public class InventoryClickListener implements Listener {
     @EventHandler
     public void onInventoryClick(InventoryClickEvent e) {
         if ((e.getAction().equals(InventoryAction.NOTHING) || e.getAction().equals(InventoryAction.PICKUP_SOME) || e.getAction().equals(InventoryAction.PICKUP_ONE)) && e.getClick() != null && e.getCurrentItem() != null && (e.getClick().equals(ClickType.LEFT) || e.getClick().equals(ClickType.RIGHT))) {
-            int slot = e.getSlot();
             SlimefunObject sfCurrent = itemsManager.getItemByTag(e.getCurrentItem());
             SlimefunObject sfCursor = itemsManager.getItemByTag(e.getCursor());
             if (sfCurrent == null) sfCurrent = blocksManager.getBlockByTag(e.getCurrentItem());
@@ -90,8 +89,7 @@ public class InventoryClickListener implements Listener {
                 for (ItemStack is : items) {
                     if (is == null) continue;
                     if (!is.hasItemMeta()) continue;
-                    if (is.getItemMeta().equals(sfCurrent.getItem().getItemMeta()) && is.getType().equals(sfCurrent.getItem().getType()))
-                        list.add(is);
+                    if (InventoryUtils.isEqual(sfCurrent, is)) list.add(is);
                 }
 
                 int count = e.getCurrentItem().getAmount();
@@ -126,7 +124,7 @@ public class InventoryClickListener implements Listener {
                 for (ItemStack is : p.getInventory().getContents()) {
                     if (is == null) continue;
                     if (!is.hasItemMeta()) continue;
-                    if (is.getItemMeta().equals(sfCurrent.getItem().getItemMeta()) && is.getType().equals(sfCurrent.getItem().getType())) list.add(is);
+                    if (InventoryUtils.isEqual(sfCurrent, is)) list.add(is);
                 }
 
                 int count = e.getCurrentItem().getAmount();
@@ -159,7 +157,7 @@ public class InventoryClickListener implements Listener {
                 for (ItemStack is : p.getOpenInventory().getTopInventory().getContents()) {
                     if (is == null) continue;
                     if (!is.hasItemMeta()) continue;
-                    if (is.getItemMeta().equals(sfCurrent.getItem().getItemMeta()) && is.getType().equals(sfCurrent.getItem().getType())) list.add(is);
+                    if (InventoryUtils.isEqual(sfCurrent, is)) list.add(is);
                 }
 
                 int count = e.getCurrentItem().getAmount();
