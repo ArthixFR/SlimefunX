@@ -8,6 +8,7 @@ import fr.horizons.slimefunx.item.SlimefunItem;
 import fr.horizons.slimefunx.item.SlimefunTool;
 import fr.horizons.slimefunx.util.Durability;
 import fr.horizons.slimefunx.util.InventoryUtils;
+import fr.horizons.slimefunx.util.LocationUtils;
 import fr.horizons.slimefunx.util.NBTListType;
 import net.minecraft.server.v1_13_R2.*;
 import org.bukkit.Location;
@@ -137,7 +138,7 @@ public abstract class SlimefunBlock extends SlimefunObject implements ICraftable
         SlimefunBlock slimefunBlock = SlimefunX.getInstance().getBlocksManager().getBlockByTag(loc.getBlock());
         if (slimefunBlock != null) {
             loc.getBlock().setType(Material.AIR);
-            loc.getWorld().dropItemNaturally(loc, slimefunBlock.getItem());
+            loc.getWorld().dropItemNaturally(LocationUtils.getBlockCenter(loc), slimefunBlock.getItem());
             if (damage) {
                 SlimefunItem slimefunItem = SlimefunX.getInstance().getItemsManager().getItemByTag(breaker);
                 if (slimefunItem != null) {
