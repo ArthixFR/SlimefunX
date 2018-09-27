@@ -8,6 +8,7 @@ import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.TabCompleter;
 import org.bukkit.entity.Player;
+import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.PlayerInventory;
 
 import java.util.ArrayList;
@@ -37,10 +38,20 @@ public class BaseCommand implements CommandExecutor, TabCompleter {
 
                 SlimefunItem slimefunItem = plugin.getItemsManager().getItemById(args[1]);
                 SlimefunBlock slimefunBlock = plugin.getBlocksManager().getBlockById(args[1]);
+                int count = 1;
+                if (args.length == 3) {
+                    try {
+                        count = Integer.valueOf(args[2]);
+                    } catch (NumberFormatException ex) {}
+                }
                 if (slimefunBlock != null) {
-                    playerInventory.setItem(p.getInventory().firstEmpty(), slimefunBlock.getItem());
+                    ItemStack is = slimefunBlock.getItem().clone();
+                    is.setAmount(count);
+                    playerInventory.setItem(p.getInventory().firstEmpty(), is);
                 } else if (slimefunItem != null) {
-                    playerInventory.setItem(p.getInventory().firstEmpty(), slimefunItem.getItem());
+                    ItemStack is = slimefunItem.getItem().clone();
+                    is.setAmount(count);
+                    playerInventory.setItem(p.getInventory().firstEmpty(), is);
                 } else {
                     System.out.println("sfi null");
                     return true;
