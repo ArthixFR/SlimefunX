@@ -5,7 +5,7 @@ import fr.horizons.slimefunx.base.SlimefunObject;
 import fr.horizons.slimefunx.block.SlimefunBlock;
 import fr.horizons.slimefunx.block.SlimefunMachine;
 import fr.horizons.slimefunx.block.SlimefunStaticBlock;
-import fr.horizons.slimefunx.item.SlimefunRessource;
+import fr.horizons.slimefunx.item.SlimefunResource;
 import fr.horizons.slimefunx.item.SlimefunTool;
 import fr.horizons.slimefunx.util.LocationUtils;
 import org.bukkit.Location;
@@ -47,7 +47,7 @@ public class PlayerInteractListener implements Listener {
                 Location newLoc = LocationUtils.getPlaceLocation(e.getClickedBlock().getLocation(), e.getBlockFace());
                 if (LocationUtils.isPlaceAir(newLoc) && LocationUtils.isPlaceEmpty(newLoc)) ((SlimefunBlock) slimefunObjectItem).placeBlock(e.getItem(), newLoc);
             }
-        } else if (slimefunObjectItem instanceof SlimefunRessource) {
+        } else if (slimefunObjectItem instanceof SlimefunResource) {
             if (e.getAction().equals(Action.RIGHT_CLICK_BLOCK) && e.getClickedBlock().getType().equals(Material.GRASS_BLOCK)) e.setCancelled(true);
         }
     }

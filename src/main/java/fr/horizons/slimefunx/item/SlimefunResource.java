@@ -7,9 +7,9 @@ import org.bukkit.inventory.ItemStack;
 import javax.annotation.Nullable;
 import java.util.List;
 
-public abstract class SlimefunRessource extends SlimefunItem {
+public abstract class SlimefunResource extends SlimefunItem {
 
-    public SlimefunRessource(String id, int textureId, @Nullable String name, @Nullable List<String> lore) {
+    public SlimefunResource(String id, int textureId, @Nullable String name, @Nullable List<String> lore) {
         super(id, Categories.RESSOURCES, new ItemStack(Material.DIAMOND_SHOVEL), textureId, name, lore);
     }
 

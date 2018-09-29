@@ -1,6 +1,6 @@
 package fr.horizons.slimefunx.list;
 
-import fr.horizons.slimefunx.item.SlimefunRessource;
+import fr.horizons.slimefunx.item.SlimefunResource;
 import fr.horizons.slimefunx.item.SlimefunTool;
 import fr.horizons.slimefunx.item.ressources.SlimefunDust;
 import fr.horizons.slimefunx.item.ressources.ingot.*;
@@ -30,20 +30,20 @@ public class ItemList {
     public static SlimefunDust SILVER_DUST = new SlimefunDust("silver", 11, "Silver", null);
 
     // NUGGETS
-    public static SlimefunRessource TIN_NUGGET = new TinNugget("tin_nugget", Categories.RESSOURCES, new ItemStack(Material.DIAMOND_SHOVEL), 12, "Tin Nugget", null);
-    public static SlimefunRessource COPPER_NUGGET = new CopperNugget("copper_nugget", Categories.RESSOURCES, new ItemStack(Material.DIAMOND_SHOVEL), 13, "Copper Nugget", null);
-    public static SlimefunRessource ALUMINIUM_NUGGET = new AluminiumNugget("aluminium_nugget", Categories.RESSOURCES, new ItemStack(Material.DIAMOND_SHOVEL), 14, "Aluminium Nugget", null);
-    public static SlimefunRessource ZINC_NUGGET = new ZincNugget("zinc_nugget", Categories.RESSOURCES, new ItemStack(Material.DIAMOND_SHOVEL), 15, "Zinc Nugget", null);
-    public static SlimefunRessource MAGNESIUM_NUGGET = new MagnesiumNugget("magnesium_nugget", Categories.RESSOURCES, new ItemStack(Material.DIAMOND_SHOVEL), 16, "Magnesium Nugget", null);
-    public static SlimefunRessource LEAD_NUGGET = new LeadNugget("lead_nugget", Categories.RESSOURCES, new ItemStack(Material.DIAMOND_SHOVEL), 17, "Lead Nugget", null);
-    public static SlimefunRessource SILVER_NUGGET = new SilverNugget("silver_nugget", Categories.RESSOURCES, new ItemStack(Material.DIAMOND_SHOVEL), 18, "Silver Nugget", null);
+    public static SlimefunResource TIN_NUGGET = new TinNugget("tin_nugget", Categories.RESSOURCES, new ItemStack(Material.DIAMOND_SHOVEL), 12, "Tin Nugget", null);
+    public static SlimefunResource COPPER_NUGGET = new CopperNugget("copper_nugget", Categories.RESSOURCES, new ItemStack(Material.DIAMOND_SHOVEL), 13, "Copper Nugget", null);
+    public static SlimefunResource ALUMINIUM_NUGGET = new AluminiumNugget("aluminium_nugget", Categories.RESSOURCES, new ItemStack(Material.DIAMOND_SHOVEL), 14, "Aluminium Nugget", null);
+    public static SlimefunResource ZINC_NUGGET = new ZincNugget("zinc_nugget", Categories.RESSOURCES, new ItemStack(Material.DIAMOND_SHOVEL), 15, "Zinc Nugget", null);
+    public static SlimefunResource MAGNESIUM_NUGGET = new MagnesiumNugget("magnesium_nugget", Categories.RESSOURCES, new ItemStack(Material.DIAMOND_SHOVEL), 16, "Magnesium Nugget", null);
+    public static SlimefunResource LEAD_NUGGET = new LeadNugget("lead_nugget", Categories.RESSOURCES, new ItemStack(Material.DIAMOND_SHOVEL), 17, "Lead Nugget", null);
+    public static SlimefunResource SILVER_NUGGET = new SilverNugget("silver_nugget", Categories.RESSOURCES, new ItemStack(Material.DIAMOND_SHOVEL), 18, "Silver Nugget", null);
 
     // INGOTS
-    public static SlimefunRessource TIN_INGOT = new TinIngot("tin_ingot", Categories.RESSOURCES, new ItemStack(Material.DIAMOND_SHOVEL), 19, "Tin Ingot", null);
-    public static SlimefunRessource COPPER_INGOT = new CopperIngot("copper_ingot", Categories.RESSOURCES, new ItemStack(Material.DIAMOND_SHOVEL), 20, "Copper Ingot", null);
-    public static SlimefunRessource ALUMINIUM_INGOT = new AluminiumIngot("aluminium_ingot", Categories.RESSOURCES, new ItemStack(Material.DIAMOND_SHOVEL), 21, "Aluminium Ingot", null);
-    public static SlimefunRessource ZINC_INGOT = new ZincIngot("zinc_ingot", Categories.RESSOURCES, new ItemStack(Material.DIAMOND_SHOVEL), 22, "Zinc Ingot", null);
-    public static SlimefunRessource MAGNESIUM_INGOT = new MagnesiumIngot("magnesium_ingot", Categories.RESSOURCES, new ItemStack(Material.DIAMOND_SHOVEL), 23, "Magnesium Ingot", null);
-    public static SlimefunRessource LEAD_INGOT = new LeadIngot("lead_ingot", Categories.RESSOURCES, new ItemStack(Material.DIAMOND_SHOVEL), 24, "Lead Ingot", null);
-    public static SlimefunRessource SILVER_INGOT = new SilverIngot("silver_ingot", Categories.RESSOURCES, new ItemStack(Material.DIAMOND_SHOVEL), 25, "Silver Ingot", null);
+    public static SlimefunResource TIN_INGOT = new TinIngot("tin_ingot", Categories.RESSOURCES, new ItemStack(Material.DIAMOND_SHOVEL), 19, "Tin Ingot", null);
+    public static SlimefunResource COPPER_INGOT = new CopperIngot("copper_ingot", Categories.RESSOURCES, new ItemStack(Material.DIAMOND_SHOVEL), 20, "Copper Ingot", null);
+    public static SlimefunResource ALUMINIUM_INGOT = new AluminiumIngot("aluminium_ingot", Categories.RESSOURCES, new ItemStack(Material.DIAMOND_SHOVEL), 21, "Aluminium Ingot", null);
+    public static SlimefunResource ZINC_INGOT = new ZincIngot("zinc_ingot", Categories.RESSOURCES, new ItemStack(Material.DIAMOND_SHOVEL), 22, "Zinc Ingot", null);
+    public static SlimefunResource MAGNESIUM_INGOT = new MagnesiumIngot("magnesium_ingot", Categories.RESSOURCES, new ItemStack(Material.DIAMOND_SHOVEL), 23, "Magnesium Ingot", null);
+    public static SlimefunResource LEAD_INGOT = new LeadIngot("lead_ingot", Categories.RESSOURCES, new ItemStack(Material.DIAMOND_SHOVEL), 24, "Lead Ingot", null);
+    public static SlimefunResource SILVER_INGOT = new SilverIngot("silver_ingot", Categories.RESSOURCES, new ItemStack(Material.DIAMOND_SHOVEL), 25, "Silver Ingot", null);
 }
