@@ -1,4 +1,4 @@
-package fr.horizons.slimefunx.item.ressources.dust;
+package fr.horizons.slimefunx.item.ressources.nugget;
 
 import fr.horizons.slimefunx.base.Category;
 import fr.horizons.slimefunx.item.SlimefunRessource;
@@ -7,8 +7,8 @@ import org.bukkit.inventory.ItemStack;
 import javax.annotation.Nullable;
 import java.util.List;
 
-public class LapisDust extends SlimefunRessource {
-    public LapisDust(String id, Category category, ItemStack item, int textureId, @Nullable String name, @Nullable List<String> lore) {
+public class SilverNugget extends SlimefunRessource {
+    public SilverNugget(String id, Category category, ItemStack item, int textureId, @Nullable String name, @Nullable List<String> lore) {
         super(id, category, item, textureId, name, lore);
     }
 
