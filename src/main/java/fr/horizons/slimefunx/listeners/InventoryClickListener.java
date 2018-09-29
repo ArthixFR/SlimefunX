@@ -76,11 +76,11 @@ public class InventoryClickListener implements Listener {
                 ItemStack[] items = new ItemStack[0];
                 int slotStart = -1, slotEnd = -1;
                 if (e.getSlotType().equals(InventoryType.SlotType.QUICKBAR)) {
-                    items = IntStream.range(9, 35).boxed().map(p.getInventory()::getItem).toArray(ItemStack[]::new);
+                    items = IntStream.rangeClosed(9, 35).boxed().map(p.getInventory()::getItem).toArray(ItemStack[]::new);
                     slotStart = 9;
                     slotEnd = 35;
                 } else if (e.getSlotType().equals(InventoryType.SlotType.CONTAINER)) {
-                    items = IntStream.range(0, 8).boxed().map(p.getInventory()::getItem).toArray(ItemStack[]::new);
+                    items = IntStream.rangeClosed(0, 8).boxed().map(p.getInventory()::getItem).toArray(ItemStack[]::new);
                     slotStart = 0;
                     slotEnd = 8;
                 }
