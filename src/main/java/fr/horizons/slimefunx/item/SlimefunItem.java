@@ -31,7 +31,7 @@ public abstract class SlimefunItem extends SlimefunObject implements ICraftable,
             im.addItemFlags(ItemFlag.HIDE_UNBREAKABLE);
         }
         if (name != null) {
-            this.name = name;
+            this.name = "§f" + name;
             im.setDisplayName(name);
         }
         if (lore != null) {
