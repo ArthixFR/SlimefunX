@@ -59,7 +59,7 @@ public class Sieve extends SlimefunMachine {
     }
 
     @Override
-    public void interactEvent(PlayerInteractEvent e) { // TODO: ANIMATION !
+    public void interactEvent(PlayerInteractEvent e) {
         Block b = e.getClickedBlock();
         NBTTagCompound nbtTagCompound = (NBTTagCompound) InventoryUtils.getBlockData(b, "SieveData");
 
