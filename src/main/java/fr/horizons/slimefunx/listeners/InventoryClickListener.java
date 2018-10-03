@@ -3,17 +3,23 @@ package fr.horizons.slimefunx.listeners;
 import fr.horizons.slimefunx.SlimefunX;
 import fr.horizons.slimefunx.base.SlimefunObject;
 import fr.horizons.slimefunx.block.BlocksManager;
+import fr.horizons.slimefunx.block.SlimefunBlock;
 import fr.horizons.slimefunx.interfaces.IStackable;
 import fr.horizons.slimefunx.item.ItemsManager;
+import fr.horizons.slimefunx.item.SlimefunItem;
+import fr.horizons.slimefunx.util.CraftingType;
 import fr.horizons.slimefunx.util.InventoryUtils;
+import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.inventory.*;
+import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.stream.IntStream;
 
@@ -31,7 +37,103 @@ public class InventoryClickListener implements Listener {
 
     @EventHandler
     public void onInventoryClick(InventoryClickEvent e) {
-        if ((e.getAction().equals(InventoryAction.NOTHING) || e.getAction().equals(InventoryAction.PICKUP_SOME) || e.getAction().equals(InventoryAction.PICKUP_ONE)) && e.getClick() != null && e.getCurrentItem() != null && (e.getClick().equals(ClickType.LEFT) || e.getClick().equals(ClickType.RIGHT))) {
+         if (e.getClickedInventory() != null && e.getClick() != null && e.getClickedInventory().getType().equals(InventoryType.WORKBENCH) && e.getSlotType().equals(InventoryType.SlotType.RESULT)) {
+            SlimefunObject slimefunObject = InventoryUtils.getSlimefunObject(e.getCurrentItem());
+            Player p = (Player) e.getWhoClicked();
+            if (slimefunObject != null) {
+                e.setCancelled(true);
+                Bukkit.getScheduler().runTaskLater(plugin, () -> {
+                    Inventory inv = e.getClickedInventory();
+                    ItemStack[] content = inv.getContents();
+                    if (!e.getClick().equals(ClickType.SHIFT_LEFT)) {
+                        for (int i = 1; i < content.length; i++) {
+                            if (content[i] == null) continue;
+                            if (content[i].getType() == Material.AIR) continue;
+                            if (content[i].getAmount() == 1) inv.setItem(i, null);
+                            else {
+                                ItemStack is = content[i].clone();
+                                is.setAmount(content[i].getAmount() - 1);
+                                inv.setItem(i, is);
+                            }
+                        }
+                        e.setCursor(slimefunObject.getItem());
+                    } else {
+                        ArrayList<Integer> countList = new ArrayList<>();
+                        ItemStack[] gridContent = new ItemStack[9];
+                        for (int i = 1; i < content.length; i++) {
+                            gridContent[i - 1] = content[i];
+                            if (content[i] == null) continue;
+                            if (content[i].getType() == Material.AIR) continue;
+                            countList.add(content[i].getAmount());
+                        }
+                        int min = Collections.min(countList);
+                        final int[] countPerCraft = {1};
+                        int stackSize = e.getCurrentItem().getMaxStackSize();
+
+                        if (slimefunObject instanceof SlimefunBlock) {
+                            stackSize = ((SlimefunBlock) slimefunObject).stackSize();
+                            ((SlimefunBlock) slimefunObject).getRecipesPatterns().row(CraftingType.CRAFTING_TABLE).forEach((integer, itemStacks) -> {
+                                if (InventoryUtils.isValidRecipe(gridContent, itemStacks)) countPerCraft[0] = integer;
+                            });
+                        } else if (slimefunObject instanceof SlimefunItem) {
+                            stackSize = ((SlimefunItem) slimefunObject).stackSize();
+                            ((SlimefunItem) slimefunObject).getRecipesPatterns().row(CraftingType.CRAFTING_TABLE).forEach((integer, itemStacks) -> {
+                                if (InventoryUtils.isValidRecipe(gridContent, itemStacks)) countPerCraft[0] = integer;
+                            });
+                        }
+
+                        int maxPlaceable = InventoryUtils.getNumberOfItemPlaceable(slimefunObject.getItem(), p.getInventory().getStorageContents());
+                        int maxCraftPlaceable = (int)Math.floor((double)maxPlaceable / countPerCraft[0]);
+                        if (min > maxCraftPlaceable) min = maxCraftPlaceable;
+
+                        if (maxCraftPlaceable == 0) return;
+
+                        List<ItemStack> list = new ArrayList<>();
+
+                        for (ItemStack is : p.getInventory().getStorageContents()) {
+                            if (is == null) continue;
+                            if (!is.hasItemMeta()) continue;
+                            if (InventoryUtils.isEqual(slimefunObject, is)) list.add(is);
+                        }
+
+                        int count = min * countPerCraft[0];
+
+                        for (ItemStack is : list) {
+                            if (count > 0) {
+                                if ((is.getAmount() + count) <= stackSize) {
+                                    is.setAmount(count + is.getAmount());
+                                    p.updateInventory();
+                                    return;
+                                }
+                                if ((is.getAmount() + count) > stackSize) {
+                                    int difference = (is.getAmount() + count) - stackSize;
+                                    is.setAmount(stackSize);
+                                    count = difference;
+                                }
+                            }
+                        }
+                        for (int i = count; i > 0; i -= stackSize) {
+                            if (p.getInventory().firstEmpty() != -1) {
+                                ItemStack is = e.getCurrentItem().clone();
+                                is.setAmount(stackSize);
+                                p.getInventory().addItem(is);
+                            }
+                        }
+
+                        for (int i = 1; i < content.length; i++) {
+                            if (content[i] == null) continue;
+                            if (content[i].getType() == Material.AIR) continue;
+                            if (content[i].getAmount() == 1) inv.setItem(i, null);
+                            else {
+                                ItemStack is = content[i].clone();
+                                is.setAmount(content[i].getAmount() - min);
+                                inv.setItem(i, is);
+                            }
+                        }
+                    }
+                }, 1L);
+            }
+        } else if ((e.getAction().equals(InventoryAction.NOTHING) || e.getAction().equals(InventoryAction.PICKUP_SOME) || e.getAction().equals(InventoryAction.PICKUP_ONE)) && e.getClick() != null && e.getCurrentItem() != null && (e.getClick().equals(ClickType.LEFT) || e.getClick().equals(ClickType.RIGHT))) {
             SlimefunObject sfCurrent = itemsManager.getItemByTag(e.getCurrentItem());
             SlimefunObject sfCursor = itemsManager.getItemByTag(e.getCursor());
             if (sfCurrent == null) sfCurrent = blocksManager.getBlockByTag(e.getCurrentItem());
@@ -121,7 +223,7 @@ public class InventoryClickListener implements Listener {
             } else if (!e.getClickedInventory().getType().equals(InventoryType.PLAYER) && !p.getOpenInventory().getType().equals(InventoryType.CRAFTING)) {
                 List<ItemStack> list = new ArrayList<>();
 
-                for (ItemStack is : p.getInventory().getContents()) {
+                for (ItemStack is : p.getInventory().getStorageContents()) {
                     if (is == null) continue;
                     if (!is.hasItemMeta()) continue;
                     if (InventoryUtils.isEqual(sfCurrent, is)) list.add(is);

@@ -1,11 +1,14 @@
 package fr.horizons.slimefunx.item.tools;
 
 import com.google.common.collect.ImmutableMap;
+import com.google.common.collect.ImmutableTable;
+import com.google.common.collect.Table;
 import fr.horizons.slimefunx.base.Category;
 import fr.horizons.slimefunx.block.SlimefunBlock;
 import fr.horizons.slimefunx.item.SlimefunTool;
 import fr.horizons.slimefunx.list.BlockList;
 import fr.horizons.slimefunx.list.Categories;
+import fr.horizons.slimefunx.util.CraftingType;
 import fr.horizons.slimefunx.util.Durability;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -26,8 +29,15 @@ public class StoneHammer extends SlimefunTool {
     }
 
     @Override
-    public String[][] getRecipePattern() {
-        return new String[0][];
+    public Table<CraftingType, Integer, ItemStack[]> getRecipesPatterns() {
+        return ImmutableTable.<CraftingType, Integer, ItemStack[]>builder()
+                .put(CraftingType.CRAFTING_TABLE, 1,
+                        new ItemStack[]{
+                                null, new ItemStack(Material.COBBLESTONE), new ItemStack(Material.COBBLESTONE),
+                                null, new ItemStack(Material.STICK), new ItemStack(Material.COBBLESTONE),
+                                new ItemStack(Material.STICK), null, null
+                        })
+                .build();
     }
 
     @Override

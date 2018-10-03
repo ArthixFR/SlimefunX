@@ -1,6 +1,9 @@
 package fr.horizons.slimefunx.item.ressources;
 
+import com.google.common.collect.Table;
 import fr.horizons.slimefunx.item.SlimefunResource;
+import fr.horizons.slimefunx.util.CraftingType;
+import org.bukkit.inventory.ItemStack;
 
 import javax.annotation.Nullable;
 import java.util.List;
@@ -12,8 +15,8 @@ public class SlimefunDust extends SlimefunResource {
     }
 
     @Override
-    public String[][] getRecipePattern() {
-        return new String[0][];
+    public Table<CraftingType, Integer, ItemStack[]> getRecipesPatterns() {
+        return null;
     }
 
     @Override

@@ -2,6 +2,7 @@ package fr.horizons.slimefunx;
 
 import fr.horizons.slimefunx.block.BlocksManager;
 import fr.horizons.slimefunx.commands.BaseCommand;
+import fr.horizons.slimefunx.list.CraftingList;
 import fr.horizons.slimefunx.listeners.*;
 import fr.horizons.slimefunx.item.ItemsManager;
 import fr.horizons.slimefunx.util.BlockDamager;
@@ -51,6 +52,8 @@ public final class SlimefunX extends JavaPlugin {
 
         registerEvents();
 
+        CraftingList.initCrafting();
+
         listen();
     }
 
@@ -68,6 +71,7 @@ public final class SlimefunX extends JavaPlugin {
         pm.registerEvents(new EntityPickupItemListener(this), this);
         pm.registerEvents(new InventoryMoveItemListener(this), this);
         pm.registerEvents(new BlockDamageListener(this), this);
+        pm.registerEvents(new PrepareItemCraftListener(this), this);
     }
 
     public void listen() {

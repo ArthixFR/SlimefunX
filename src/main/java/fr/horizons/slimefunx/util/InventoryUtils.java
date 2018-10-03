@@ -1,6 +1,10 @@
 package fr.horizons.slimefunx.util;
 
+import fr.horizons.slimefunx.SlimefunX;
 import fr.horizons.slimefunx.base.SlimefunObject;
+import fr.horizons.slimefunx.block.SlimefunBlock;
+import fr.horizons.slimefunx.interfaces.IStackable;
+import fr.horizons.slimefunx.list.CraftingList;
 import net.minecraft.server.v1_13_R2.*;
 import org.bukkit.block.Block;
 import org.bukkit.craftbukkit.v1_13_R2.CraftWorld;
@@ -9,6 +13,7 @@ import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
+import javax.annotation.Nullable;
 import java.util.stream.IntStream;
 
 public class InventoryUtils {
@@ -132,5 +137,98 @@ public class InventoryUtils {
 
     public static Object getBlockData(Block b, String key) {
         return getBlockData(b, key, -1);
+    }
+
+    public static SlimefunObject getSlimefunObject(ItemStack is) {
+        if (is == null) return null;
+        SlimefunBlock slimefunBlock = SlimefunX.getInstance().getBlocksManager().getBlockByTag(is);
+        return (slimefunBlock == null ? SlimefunX.getInstance().getItemsManager().getItemByTag(is) : slimefunBlock);
+    }
+
+    public static boolean isValidRecipe(ItemStack[] craftingGrid, @Nullable ItemStack[] slimefunRecipe) {
+        if (slimefunRecipe == null) return false;
+        if (craftingGrid.length != slimefunRecipe.length) return false;
+        for (int i = 0; i < craftingGrid.length; i++) {
+            SlimefunObject slimefunObject = getSlimefunObject(craftingGrid[i]);
+            SlimefunObject slimefunObject1 = getSlimefunObject(slimefunRecipe[i]);
+
+            if (craftingGrid[i] == null && slimefunRecipe[i] == null) continue;
+            if ((slimefunObject != null && slimefunObject1 != null)) {
+                if (!isEqual(slimefunObject, slimefunObject1.getItem())) return false;
+                continue;
+            }
+            if ((craftingGrid[i] == null && slimefunRecipe[i] != null) || (craftingGrid[i] != null && slimefunRecipe[i] == null)) return false;
+            if (craftingGrid[i].getType().equals(slimefunRecipe[i].getType())) continue;
+
+            return false;
+        }
+        return true;
+    }
+
+    public static ItemStack getResultByRecipe(ItemStack[] craftingGrid, CraftingType craftingType) {
+        final SlimefunObject[] slimefunObject = new SlimefunObject[1];
+        final int[] quantity = new int[1];
+
+        SlimefunX.getInstance().getBlocksManager().getBlockSet().forEach(slimefunBlock -> {
+            if (slimefunBlock.getRecipesPatterns() != null) {
+                slimefunBlock.getRecipesPatterns().row(craftingType).forEach((integer, itemstack) -> {
+                    if (InventoryUtils.isValidRecipe(craftingGrid, itemstack)) {
+                        slimefunObject[0] = slimefunBlock;
+                        quantity[0] = integer;
+                    }
+                });
+            }
+        });
+
+        if (slimefunObject[0] == null) {
+            SlimefunX.getInstance().getItemsManager().getItemsSet().forEach(slimefunItem -> {
+                if (slimefunItem.getRecipesPatterns() != null) {
+                    slimefunItem.getRecipesPatterns().row(craftingType).forEach((integer, itemstack) -> {
+                        if (InventoryUtils.isValidRecipe(craftingGrid, itemstack)) {
+                            slimefunObject[0] = slimefunItem;
+                            quantity[0] = integer;
+                        }
+                    });
+                }
+            });
+        }
+
+        if (slimefunObject[0] != null) {
+            ItemStack is = slimefunObject[0].getItem().clone();
+            is.setAmount(quantity[0]);
+            return is;
+        } else {
+            final ItemStack[] is = new ItemStack[1];
+            CraftingList.craftingTable.row(craftingType).forEach((integer, itemStackEntry) -> {
+                if (InventoryUtils.isValidRecipe(craftingGrid, itemStackEntry.getValue())) {
+                    is[0] = itemStackEntry.getKey().clone();
+                    is[0].setAmount(integer);
+                }
+            });
+            return is[0];
+        }
+    }
+
+    public static int getNumberOfItemPlaceable(ItemStack itemToPlace, ItemStack[] inventoryContent) {
+        SlimefunObject slimefunObject = getSlimefunObject(itemToPlace);
+        int stackSize;
+        if (slimefunObject != null) {
+            stackSize = ((IStackable)slimefunObject).stackSize();
+        } else {
+            stackSize = itemToPlace.getType().getMaxStackSize();
+        }
+        int placeable = 0;
+        for (ItemStack is : inventoryContent) {
+            if (is == null) {
+                placeable += stackSize;
+                continue;
+            }
+            if (slimefunObject != null) {
+                if (isEqual(slimefunObject, is)) placeable += (stackSize - is.getAmount());
+            } else {
+                if (is.isSimilar(itemToPlace)) placeable += (stackSize - is.getAmount());
+            }
+        }
+        return placeable;
     }
 }

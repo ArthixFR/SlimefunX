@@ -1,20 +1,18 @@
 package fr.horizons.slimefunx.item.tools;
 
 import com.google.common.collect.ImmutableMap;
+import com.google.common.collect.ImmutableTable;
+import com.google.common.collect.Table;
 import fr.horizons.slimefunx.base.Category;
-import fr.horizons.slimefunx.base.SlimefunObject;
 import fr.horizons.slimefunx.block.SlimefunBlock;
 import fr.horizons.slimefunx.item.SlimefunTool;
 import fr.horizons.slimefunx.list.BlockList;
-import fr.horizons.slimefunx.list.Categories;
-import fr.horizons.slimefunx.list.ItemList;
+import fr.horizons.slimefunx.util.CraftingType;
 import fr.horizons.slimefunx.util.Durability;
-import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
-import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.PlayerInventory;
@@ -29,12 +27,15 @@ public class WoodenHammer extends SlimefunTool {
     }
 
     @Override
-    public String[][] getRecipePattern() {
-        return new String[][]{
-                {"", "OAK_PLANKS", "OAK_PLANKS"},
-                {"", "STICK", "OAK_PLANKS"},
-                {"STICK", "", ""}
-        };
+    public Table<CraftingType, Integer, ItemStack[]> getRecipesPatterns() {
+        return ImmutableTable.<CraftingType, Integer, ItemStack[]>builder()
+                .put(CraftingType.CRAFTING_TABLE, 1,
+                        new ItemStack[]{
+                                null, new ItemStack(Material.OAK_PLANKS), new ItemStack(Material.OAK_PLANKS),
+                                null, new ItemStack(Material.STICK), new ItemStack(Material.OAK_PLANKS),
+                                new ItemStack(Material.STICK), null, null
+                        })
+                .build();
     }
 
     @Override
@@ -70,7 +71,8 @@ public class WoodenHammer extends SlimefunTool {
                 b.setType(Material.AIR);
                 break;
         }
-        if (hasDurability()) playerInventory.setItemInMainHand(Durability.setDurability(playerInventory.getItemInMainHand(), Durability.getDurability(playerInventory.getItemInMainHand()) - 1));
+        if (hasDurability())
+            playerInventory.setItemInMainHand(Durability.setDurability(playerInventory.getItemInMainHand(), Durability.getDurability(playerInventory.getItemInMainHand()) - 1));
     }
 
     @Override

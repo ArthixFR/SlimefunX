@@ -1,9 +1,11 @@
 package fr.horizons.slimefunx.block.staticblocks;
 
+import com.google.common.collect.Table;
 import fr.horizons.slimefunx.base.Category;
 import fr.horizons.slimefunx.base.SlimefunObject;
 import fr.horizons.slimefunx.block.SlimefunStaticBlock;
 import fr.horizons.slimefunx.list.Categories;
+import fr.horizons.slimefunx.util.CraftingType;
 import org.bukkit.Material;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.ItemStack;
@@ -19,8 +21,8 @@ public class DustBlock extends SlimefunStaticBlock {
     }
 
     @Override
-    public String[][] getRecipePattern() {
-        return new String[0][];
+    public Table<CraftingType, Integer, ItemStack[]> getRecipesPatterns() {
+        return null;
     }
 
     @Override

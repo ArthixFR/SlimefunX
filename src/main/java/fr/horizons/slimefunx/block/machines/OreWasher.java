@@ -1,9 +1,12 @@
 package fr.horizons.slimefunx.block.machines;
 
+import com.google.common.collect.ImmutableTable;
+import com.google.common.collect.Table;
 import fr.horizons.slimefunx.base.Category;
 import fr.horizons.slimefunx.base.SlimefunObject;
 import fr.horizons.slimefunx.block.SlimefunMachine;
 import fr.horizons.slimefunx.list.ItemList;
+import fr.horizons.slimefunx.util.CraftingType;
 import fr.horizons.slimefunx.util.InventoryUtils;
 import fr.horizons.slimefunx.util.LocationUtils;
 import fr.horizons.slimefunx.util.MathUtils;
@@ -40,8 +43,15 @@ public class OreWasher extends SlimefunMachine {
     }
 
     @Override
-    public String[][] getRecipePattern() {
-        return new String[0][];
+    public Table<CraftingType, Integer, ItemStack[]> getRecipesPatterns() {
+        return ImmutableTable.<CraftingType, Integer, ItemStack[]>builder()
+                .put(CraftingType.CRAFTING_TABLE, 1,
+                        new ItemStack[]{
+                                new ItemStack(Material.IRON_INGOT), null, new ItemStack(Material.IRON_INGOT),
+                                new ItemStack(Material.IRON_INGOT), new ItemStack(Material.COBWEB), new ItemStack(Material.IRON_INGOT),
+                                new ItemStack(Material.IRON_INGOT), new ItemStack(Material.IRON_INGOT), new ItemStack(Material.IRON_INGOT)
+                        })
+                .build();
     }
 
     @Override

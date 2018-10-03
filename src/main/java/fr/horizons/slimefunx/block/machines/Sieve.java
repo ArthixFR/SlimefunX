@@ -1,10 +1,13 @@
 package fr.horizons.slimefunx.block.machines;
 
+import com.google.common.collect.ImmutableTable;
+import com.google.common.collect.Table;
 import fr.horizons.slimefunx.base.Category;
 import fr.horizons.slimefunx.base.SlimefunObject;
 import fr.horizons.slimefunx.block.SlimefunMachine;
 import fr.horizons.slimefunx.list.BlockList;
 import fr.horizons.slimefunx.list.ItemList;
+import fr.horizons.slimefunx.util.CraftingType;
 import fr.horizons.slimefunx.util.InventoryUtils;
 import fr.horizons.slimefunx.util.LocationUtils;
 import fr.horizons.slimefunx.util.MathUtils;
@@ -44,8 +47,15 @@ public class Sieve extends SlimefunMachine {
     }
 
     @Override
-    public String[][] getRecipePattern() {
-        return new String[0][];
+    public Table<CraftingType, Integer, ItemStack[]> getRecipesPatterns() {
+        return ImmutableTable.<CraftingType, Integer, ItemStack[]>builder()
+                .put(CraftingType.CRAFTING_TABLE, 1,
+                        new ItemStack[]{
+                                new ItemStack(Material.OAK_FENCE), new ItemStack(Material.OAK_PLANKS), new ItemStack(Material.OAK_FENCE),
+                                new ItemStack(Material.OAK_PLANKS), new ItemStack(Material.COBWEB), new ItemStack(Material.OAK_PLANKS),
+                                new ItemStack(Material.OAK_FENCE), new ItemStack(Material.OAK_PLANKS), new ItemStack(Material.OAK_FENCE)
+                        })
+                .build();
     }
 
     @Override
