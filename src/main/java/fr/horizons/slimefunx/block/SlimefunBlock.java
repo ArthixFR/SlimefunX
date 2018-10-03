@@ -34,8 +34,8 @@ public abstract class SlimefunBlock extends SlimefunObject implements ICraftable
         ItemMeta im = this.getItem().getItemMeta();
         im.addItemFlags(ItemFlag.HIDE_ATTRIBUTES, ItemFlag.HIDE_UNBREAKABLE);
         if (name != null) {
-            this.name = name;
-            im.setDisplayName(name);
+            this.name = "§f" + name;
+            im.setDisplayName(this.name);
         }
         if (lore != null) {
             this.lore = lore;

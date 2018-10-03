@@ -32,7 +32,7 @@ public abstract class SlimefunItem extends SlimefunObject implements ICraftable,
         }
         if (name != null) {
             this.name = "§f" + name;
-            im.setDisplayName(name);
+            im.setDisplayName(this.name);
         }
         if (lore != null) {
             this.lore = lore;
