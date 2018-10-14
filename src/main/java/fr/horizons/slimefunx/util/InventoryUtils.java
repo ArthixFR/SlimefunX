@@ -199,10 +199,10 @@ public class InventoryUtils {
             return is;
         } else {
             final ItemStack[] is = new ItemStack[1];
-            CraftingList.craftingTable.row(craftingType).forEach((integer, itemStackEntry) -> {
+            CraftingList.craftingTable.row(craftingType).forEach((itemStack, itemStackEntry) -> {
                 if (InventoryUtils.isValidRecipe(craftingGrid, itemStackEntry.getValue())) {
-                    is[0] = itemStackEntry.getKey().clone();
-                    is[0].setAmount(integer);
+                    is[0] = itemStack.clone();
+                    is[0].setAmount(itemStackEntry.getKey());
                 }
             });
             return is[0];
