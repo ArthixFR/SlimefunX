@@ -133,14 +133,14 @@ public class InventoryClickListener implements Listener {
                     }
                 }, 1L);
             }
-        } else if ((e.getAction().equals(InventoryAction.NOTHING) || e.getAction().equals(InventoryAction.PICKUP_SOME) || e.getAction().equals(InventoryAction.PICKUP_ONE)) && e.getClick() != null && e.getCurrentItem() != null && (e.getClick().equals(ClickType.LEFT) || e.getClick().equals(ClickType.RIGHT))) {
+        } else if ((e.getAction().equals(InventoryAction.NOTHING) || e.getAction().equals(InventoryAction.PICKUP_SOME) || e.getAction().equals(InventoryAction.PICKUP_ONE) || e.getAction().equals(InventoryAction.SWAP_WITH_CURSOR)) && e.getClick() != null && e.getCurrentItem() != null && (e.getClick().equals(ClickType.LEFT) || e.getClick().equals(ClickType.RIGHT))) {
             SlimefunObject sfCurrent = itemsManager.getItemByTag(e.getCurrentItem());
             SlimefunObject sfCursor = itemsManager.getItemByTag(e.getCursor());
             if (sfCurrent == null) sfCurrent = blocksManager.getBlockByTag(e.getCurrentItem());
             if (sfCursor == null) sfCursor = blocksManager.getBlockByTag(e.getCursor());
 
             if (sfCurrent == null && sfCursor == null) return;
-            if (sfCurrent.equals(sfCursor) && !e.getAction().equals(InventoryAction.MOVE_TO_OTHER_INVENTORY)) {
+            if (InventoryUtils.isEqual(sfCurrent, sfCursor.getItem()) && !e.getAction().equals(InventoryAction.MOVE_TO_OTHER_INVENTORY)) {
                 e.setCancelled(true);
                 if (e.getClick().equals(ClickType.LEFT)) {
                     ItemStack is = e.getCurrentItem();
