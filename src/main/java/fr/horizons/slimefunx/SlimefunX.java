@@ -2,6 +2,7 @@ package fr.horizons.slimefunx;
 
 import fr.horizons.slimefunx.block.BlocksManager;
 import fr.horizons.slimefunx.commands.BaseCommand;
+import fr.horizons.slimefunx.gui.GuisManager;
 import fr.horizons.slimefunx.list.CraftingList;
 import fr.horizons.slimefunx.listeners.*;
 import fr.horizons.slimefunx.item.ItemsManager;
@@ -22,6 +23,7 @@ public final class SlimefunX extends JavaPlugin {
     private static SlimefunX instance;
     private ItemsManager itemsManager;
     private BlocksManager blocksManager;
+    private GuisManager guisManager;
 
     /*
      * IMPORTANT :
@@ -32,6 +34,7 @@ public final class SlimefunX extends JavaPlugin {
      *  SlimefunRessources : DIAMOND_SHOVEL, IRON_SHOVEL
      *  SlimefunBlock (Static & Machines) : DIAMOND_AXE, IRON_AXE
      *  SlimefunMultiblock : ?
+     *  SlimefunGui & SlimefunGuiResource : DIAMOND_SWORD
      *
      *  Utilitaires (Changement de state ou autres) : DIAMOND_PICKAXE, IRON_PICKAXE
      */
@@ -45,6 +48,9 @@ public final class SlimefunX extends JavaPlugin {
 
         this.blocksManager = new BlocksManager(this);
         this.blocksManager.registerBlocks();
+
+        this.guisManager = new GuisManager(this);
+        this.guisManager.registerGuis();
 
         PluginCommand command = getCommand("sfx");
         command.setExecutor(new BaseCommand(this));
@@ -112,5 +118,9 @@ public final class SlimefunX extends JavaPlugin {
 
     public BlocksManager getBlocksManager() {
         return blocksManager;
+    }
+
+    public GuisManager getGuisManager() {
+        return guisManager;
     }
 }

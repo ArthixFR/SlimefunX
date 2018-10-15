@@ -2,14 +2,14 @@ package fr.horizons.slimefunx.commands;
 
 import fr.horizons.slimefunx.SlimefunX;
 import fr.horizons.slimefunx.block.SlimefunBlock;
+import fr.horizons.slimefunx.gui.guis.SlimefunGuideGui;
 import fr.horizons.slimefunx.item.SlimefunItem;
-import org.bukkit.Bukkit;
+import fr.horizons.slimefunx.list.GuiList;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.TabCompleter;
 import org.bukkit.entity.Player;
-import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.PlayerInventory;
 
@@ -59,9 +59,7 @@ public class BaseCommand implements CommandExecutor, TabCompleter {
                     return true;
                 }
             } else if (args[0].equalsIgnoreCase("test")) {
-                Inventory inv = Bukkit.createInventory(p, 9 * 8);
-
-                p.openInventory(inv);
+                GuiList.SLIMEFUN_GUIDE.openGui(p);
             }
         }
         return true;
