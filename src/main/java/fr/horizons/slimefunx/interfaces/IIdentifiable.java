@@ -1,7 +1,7 @@
 package fr.horizons.slimefunx.interfaces;
 
 /**
- * Provides unique identification for a {@link fr.poslovitch.slimefunx.api.base.SlimefunObject} based on the String returned by {@link #getId()}.
+ * Provides unique identification for a {@link fr.horizons.slimefunx.base.SlimefunObject} based on the String returned by {@link #getId()}.
  *
  * @author Poslovitch
  */
