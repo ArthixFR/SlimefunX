@@ -218,6 +218,12 @@ public class InventoryUtils {
         return (slimefunBlock == null ? SlimefunX.getInstance().getItemsManager().getItemByTag(is) : slimefunBlock);
     }
 
+    public static SlimefunObject getSlimefunObject(String id) {
+        if (id == null) return null;
+        SlimefunBlock slimefunBlock = SlimefunX.getInstance().getBlocksManager().getBlockById(id);
+        return (slimefunBlock == null ? SlimefunX.getInstance().getItemsManager().getItemById(id) : slimefunBlock);
+    }
+
     public static boolean isValidRecipe(ItemStack[] craftingGrid, @Nullable ItemStack[] slimefunRecipe) {
         if (slimefunRecipe == null) return false;
         if (craftingGrid.length != slimefunRecipe.length) return false;
