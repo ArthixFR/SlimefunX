@@ -3,6 +3,7 @@ package fr.horizons.slimefunx.gui;
 import fr.horizons.slimefunx.interfaces.IIdentifiable;
 import org.apache.commons.lang.Validate;
 import org.bukkit.entity.Player;
+import org.bukkit.inventory.ItemStack;
 
 public abstract class SlimefunGui implements IIdentifiable {
     private String id;
@@ -18,5 +19,5 @@ public abstract class SlimefunGui implements IIdentifiable {
         return id;
     }
 
-    public void openGui(Player p) {}
+    public void openGui(Player p, ItemStack is) {}
 }
