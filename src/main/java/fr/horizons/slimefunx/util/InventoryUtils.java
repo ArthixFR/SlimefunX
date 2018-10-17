@@ -6,6 +6,7 @@ import fr.horizons.slimefunx.block.SlimefunBlock;
 import fr.horizons.slimefunx.interfaces.IStackable;
 import fr.horizons.slimefunx.list.CraftingList;
 import net.minecraft.server.v1_13_R2.*;
+import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.craftbukkit.v1_13_R2.CraftWorld;
 import org.bukkit.craftbukkit.v1_13_R2.inventory.CraftItemStack;
@@ -53,6 +54,78 @@ public class InventoryUtils {
         if (compound == null) return false;
         if (compound.hasKey(SlimefunObject.NBT_SLIMEFUN_ID)) return compound.getString(SlimefunObject.NBT_SLIMEFUN_ID).equals(slimefunObject.getId());
         return false;
+    }
+
+    public static ItemStack setItemData(ItemStack is, String key, Object value) {
+        net.minecraft.server.v1_13_R2.ItemStack nmsStack = CraftItemStack.asNMSCopy(is);
+        NBTTagCompound compound = (nmsStack.hasTag()) ? nmsStack.getTag() : new NBTTagCompound();
+
+        NBTBase nbtBase;
+        if (value instanceof Byte) {
+            nbtBase = new NBTTagByte((Byte) value);
+        } else if (value instanceof Short) {
+            nbtBase = new NBTTagShort((Short) value);
+        } else if (value instanceof Integer) {
+            nbtBase = new NBTTagInt((int) value);
+        } else if (value instanceof Long) {
+            nbtBase = new NBTTagLong((long) value);
+        } else if (value instanceof Float) {
+            nbtBase = new NBTTagFloat((float) value);
+        } else if (value instanceof Double) {
+            nbtBase = new NBTTagDouble((double) value);
+        } else if (value instanceof Byte[]) {
+            nbtBase = new NBTTagByteArray((byte[]) value);
+        } else if (value instanceof String) {
+            nbtBase = new NBTTagString((String) value);
+        } else if (value instanceof NBTTagList) {
+            nbtBase = (NBTTagList) value;
+        } else if (value instanceof NBTTagCompound) {
+            nbtBase = (NBTTagCompound) value;
+        } else if (value instanceof Integer[]) {
+            nbtBase = new NBTTagIntArray((int[]) value);
+        } else return is;
+
+        compound.set(key, nbtBase);
+        nmsStack.setTag(compound);
+        return CraftItemStack.asBukkitCopy(nmsStack);
+    }
+
+    public static Object getItemData(ItemStack is, String key, int listType) {
+        net.minecraft.server.v1_13_R2.ItemStack nmsStack = CraftItemStack.asNMSCopy(is);
+        NBTTagCompound compound = (nmsStack.hasTag()) ? nmsStack.getTag() : new NBTTagCompound();
+
+        NBTBase nbtBase = compound.get(key);
+        if (nbtBase == null) return null;
+
+        if (nbtBase instanceof NBTTagByte) {
+            return compound.getByte(key);
+        } else if (nbtBase instanceof NBTTagShort) {
+            return compound.getShort(key);
+        } else if (nbtBase instanceof NBTTagInt) {
+            return compound.getInt(key);
+        } else if (nbtBase instanceof NBTTagLong) {
+            return compound.getLong(key);
+        } else if (nbtBase instanceof NBTTagFloat) {
+            return compound.getFloat(key);
+        } else if (nbtBase instanceof NBTTagDouble) {
+            return compound.getDouble(key);
+        } else if (nbtBase instanceof NBTTagByteArray) {
+            return compound.getByteArray(key);
+        } else if (nbtBase instanceof NBTTagString) {
+            return compound.getString(key);
+        } else if (nbtBase instanceof NBTTagList) {
+            if (listType == -1) return null;
+            return compound.getList(key, listType);
+        } else if (nbtBase instanceof NBTTagCompound) {
+            return compound.getCompound(key);
+        } else if (nbtBase instanceof NBTTagIntArray) {
+            return compound.getIntArray(key);
+        }
+        return null;
+    }
+
+    public static Object getItemData(ItemStack is, String key) {
+        return getItemData(is, key, -1);
     }
 
     public static void setBlockData(Block b, String key, Object value) {
