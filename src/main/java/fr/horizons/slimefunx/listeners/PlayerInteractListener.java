@@ -7,6 +7,7 @@ import fr.horizons.slimefunx.block.SlimefunMachine;
 import fr.horizons.slimefunx.block.SlimefunStaticBlock;
 import fr.horizons.slimefunx.item.SlimefunResource;
 import fr.horizons.slimefunx.item.SlimefunTool;
+import fr.horizons.slimefunx.item.special.SlimefunGuide;
 import fr.horizons.slimefunx.util.LocationUtils;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -25,9 +26,17 @@ public class PlayerInteractListener implements Listener {
 
     @EventHandler
     public void onInteract(PlayerInteractEvent e) {
+        SlimefunObject slimefunObjectItem = plugin.getItemsManager().getItemByTag(e.getItem()) == null ? plugin.getBlocksManager().getBlockByTag(e.getItem()) : plugin.getItemsManager().getItemByTag(e.getItem());
+
+        if (slimefunObjectItem instanceof SlimefunGuide) {
+            if (e.getAction().equals(Action.RIGHT_CLICK_BLOCK) && e.getClickedBlock().getType().isInteractable()) {
+                return;
+            }
+            ((SlimefunTool) slimefunObjectItem).interactEvent(e);
+            return;
+        }
         if (e.getClickedBlock() == null) return;
 
-        SlimefunObject slimefunObjectItem = plugin.getItemsManager().getItemByTag(e.getItem()) == null ? plugin.getBlocksManager().getBlockByTag(e.getItem()) : plugin.getItemsManager().getItemByTag(e.getItem());
         SlimefunBlock slimefunBlock = plugin.getBlocksManager().getBlockByTag(e.getClickedBlock());
 
         if (slimefunBlock instanceof SlimefunStaticBlock || slimefunBlock instanceof SlimefunMachine) {
