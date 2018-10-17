@@ -13,7 +13,7 @@ public class GuiList {
 
     // GUI RESOURCES
     public static SlimefunGuiResource BIG_BUTTON_UNSELECT = new BigButtonUnselect("big_button_unselect", 1561);
-    public static SlimefunGuiResource GUIDE_GROUP_SELECTED = new BigButtonSelect("big_button_select", 1560);
+    public static SlimefunGuiResource BIG_BUTTON_SELECT = new BigButtonSelect("big_button_select", 1560);
 
     public static SlimefunGuiResource GUIDE_MAIN = new GuideMain("guide_main", 1);
 }
