@@ -31,6 +31,14 @@ public class GuisManager {
         return new HashSet<>(guiResources.values());
     }
 
+    public SlimefunGuiResource getGuiResourceById(String id) {
+        return guiResources.get(id);
+    }
+
+    public SlimefunGui getGuiById(String id) {
+        return guis.get(id);
+    }
+
     public void registerGuis() {
         Arrays.stream(GuiList.class.getDeclaredFields())
                 .filter(field -> SlimefunGui.class.isAssignableFrom(field.getType()))
