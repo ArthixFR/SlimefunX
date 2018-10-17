@@ -59,7 +59,7 @@ public class BaseCommand implements CommandExecutor, TabCompleter {
                     return true;
                 }
             } else if (args[0].equalsIgnoreCase("test")) {
-                GuiList.SLIMEFUN_GUIDE.openGui(p);
+                //GuiList.SLIMEFUN_GUIDE.openGui(p);
             }
         }
         return true;
