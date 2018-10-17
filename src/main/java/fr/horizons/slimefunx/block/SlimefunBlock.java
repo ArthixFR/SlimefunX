@@ -24,7 +24,7 @@ import org.bukkit.inventory.meta.ItemMeta;
 import javax.annotation.Nullable;
 import java.util.List;
 
-public abstract class SlimefunBlock extends SlimefunObject implements ICraftable, IResearchable, IPlaceable, IStackable, IBreakable {
+public abstract class SlimefunBlock extends SlimefunObject implements ICraftable, IPlaceable, IStackable, IBreakable {
     private String name;
     private List<String> lore;
 

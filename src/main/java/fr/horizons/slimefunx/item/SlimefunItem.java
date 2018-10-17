@@ -16,7 +16,7 @@ import org.bukkit.inventory.meta.ItemMeta;
 import javax.annotation.Nullable;
 import java.util.List;
 
-public abstract class SlimefunItem extends SlimefunObject implements ICraftable, IResearchable, IStackable, IAttackable {
+public abstract class SlimefunItem extends SlimefunObject implements ICraftable, IStackable, IAttackable {
 
     private String name;
     private List<String> lore;

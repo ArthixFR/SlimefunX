@@ -1,13 +1,14 @@
 package fr.horizons.slimefunx.base;
 
 import fr.horizons.slimefunx.interfaces.IIdentifiable;
+import fr.horizons.slimefunx.interfaces.IResearchable;
 import net.minecraft.server.v1_13_R2.NBTTagCompound;
 import org.apache.commons.lang.Validate;
 import org.bukkit.Material;
 import org.bukkit.craftbukkit.v1_13_R2.inventory.CraftItemStack;
 import org.bukkit.inventory.ItemStack;
 
-public class SlimefunObject implements IIdentifiable {
+public abstract class SlimefunObject implements IIdentifiable, IResearchable {
 
     public static final String NBT_SLIMEFUN_ID = "slimefun_id";
 
