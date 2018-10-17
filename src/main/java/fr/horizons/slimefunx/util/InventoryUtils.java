@@ -1,5 +1,7 @@
 package fr.horizons.slimefunx.util;
 
+import com.mojang.authlib.GameProfile;
+import com.mojang.authlib.properties.Property;
 import fr.horizons.slimefunx.SlimefunX;
 import fr.horizons.slimefunx.base.SlimefunObject;
 import fr.horizons.slimefunx.block.SlimefunBlock;
@@ -10,11 +12,19 @@ import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.craftbukkit.v1_13_R2.CraftWorld;
 import org.bukkit.craftbukkit.v1_13_R2.inventory.CraftItemStack;
+import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
+import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
+import org.bukkit.inventory.meta.SkullMeta;
+import org.bukkit.potion.Potion;
+import org.bukkit.potion.PotionType;
 
 import javax.annotation.Nullable;
+import java.lang.reflect.Field;
+import java.util.List;
+import java.util.UUID;
 import java.util.stream.IntStream;
 
 public class InventoryUtils {
@@ -309,5 +319,95 @@ public class InventoryUtils {
             }
         }
         return placeable;
+    }
+
+    public static ItemStack getCustomItem(String customName, Material material, int amount, List lore) {
+        ItemStack is = new ItemStack(material, amount);
+        ItemMeta im = is.getItemMeta();
+        if (customName == null) {
+            im.setDisplayName("§0");
+        } else {
+            im.setDisplayName("§f" + customName);
+        }
+        im.setLore(null);
+        if (lore != null) {
+            im.setLore(lore);
+        }
+        is.setItemMeta(im);
+        return is;
+    }
+
+    public static ItemStack getCustomItem(String customName, Material material, int amount) {
+        return getCustomItem(customName, material, amount, null);
+    }
+
+    public static ItemStack getCustomItem(String customName, Material material) {
+        return getCustomItem(customName, material, 1, null);
+    }
+
+    public static ItemStack getPotion(String customName, PotionType potionType, int amount, boolean isLingering, List lore) {
+        Potion potion = new Potion(potionType, 1);
+        ItemStack is = potion.toItemStack(amount);
+        if (isLingering) {
+            is.setType(org.bukkit.Material.LINGERING_POTION);
+        }
+        ItemMeta im = is.getItemMeta();
+        if (customName == null) {
+            im.setDisplayName("§0");
+        } else {
+            im.setDisplayName(customName);
+        }
+        im.setLore(null);
+        if (lore != null) {
+            im.setLore(lore);
+        }
+        im.addItemFlags(ItemFlag.HIDE_POTION_EFFECTS);
+        is.setItemMeta(im);
+        return is;
+    }
+
+    public static ItemStack getSkullHead(String customName, int amount, String url, List lore) {
+        ItemStack is = new ItemStack(Material.PLAYER_HEAD, amount);
+        ItemMeta im = is.getItemMeta();
+        im.setDisplayName("§f" + customName);
+        im.setLore(null);
+        if (lore != null) {
+            im.setLore(lore);
+        }
+        GameProfile profile = new GameProfile(UUID.randomUUID(), null);
+        byte[] encodedData = org.apache.commons.codec.binary.Base64.encodeBase64(String.format("{textures:{SKIN:{url:\"%s\"}}}", url).getBytes());
+        profile.getProperties().put("textures", new Property("textures", new String(encodedData)));
+        Field profileField = null;
+        try {
+            profileField = im.getClass().getDeclaredField("profile");
+        } catch (NoSuchFieldException | SecurityException e) {
+            e.printStackTrace();
+        }
+        assert profileField != null;
+        profileField.setAccessible(true);
+        try {
+            profileField.set(im, profile);
+        } catch (IllegalArgumentException | IllegalAccessException e) {
+            e.printStackTrace();
+        }
+        is.setItemMeta(im);
+        return is;
+    }
+
+    public static ItemStack getSkullHead(String customName, int amount, Player p, List lore) {
+        ItemStack is = getCustomItem(customName, Material.PLAYER_HEAD, amount, lore);
+        SkullMeta sm = (SkullMeta) is.getItemMeta();
+        sm.setOwningPlayer(p);
+        is.setItemMeta(sm);
+
+        return is;
+    }
+
+    public static ItemStack getSkullHead(String customName, int amount, Player p) {
+        return getSkullHead(customName, amount, p, null);
+    }
+
+    public static ItemStack getSkullHead(String customName, Player p) {
+        return getSkullHead(customName, 1, p);
     }
 }
