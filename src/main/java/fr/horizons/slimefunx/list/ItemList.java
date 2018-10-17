@@ -1,10 +1,10 @@
 package fr.horizons.slimefunx.list;
 
-import fr.horizons.slimefunx.item.SlimefunResource;
 import fr.horizons.slimefunx.item.SlimefunTool;
 import fr.horizons.slimefunx.item.ressources.SlimefunDust;
 import fr.horizons.slimefunx.item.ressources.SlimefunIngot;
 import fr.horizons.slimefunx.item.ressources.SlimefunNugget;
+import fr.horizons.slimefunx.item.special.SlimefunGuide;
 import fr.horizons.slimefunx.item.tools.StoneHammer;
 import fr.horizons.slimefunx.item.tools.WoodenHammer;
 import org.bukkit.Material;
@@ -46,4 +46,7 @@ public class ItemList {
     public static SlimefunIngot MAGNESIUM_INGOT = new SlimefunIngot("magnesium", 23, "Magnesium", null);
     public static SlimefunIngot LEAD_INGOT = new SlimefunIngot("lead", 24, "Lead", null);
     public static SlimefunIngot SILVER_INGOT = new SlimefunIngot("silver", 25, "Silver", null);
+
+    // SPECIAL
+    public static SlimefunTool SLIMEFUN_GUIDE = new SlimefunGuide("guide", Categories.TOOLS, new ItemStack(Material.BOOK), -1, "Slimefun guide", null);
 }
